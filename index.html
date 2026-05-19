@@ -65,6 +65,17 @@
     }
     .nav-logo:focus-visible { outline: 1px solid var(--accent); outline-offset: 5px; }
     .nav-logo span { color: var(--accent); }
+    .nav-version {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--sans);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: #555;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
     .nav-links {
       display: flex;
       gap: 36px;
@@ -867,6 +878,7 @@
     ───────────────────────────────────────── */
     @media (max-width: 768px) {
       nav { padding: 0 20px; }
+      .nav-version { display: none; }
       .nav-links { display: none; }
       .nav-links.open {
         display: flex;
@@ -924,11 +936,12 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
+    <span class="nav-version">v1.07</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
       <button class="nav-link" type="button" onclick="showPage('acheter')" id="nav-acheter">Acheter</button>
-      <button class="nav-link" type="button" onclick="showPage('panier')" id="nav-panier">Panier <span id="panier-count">0</span></button>
+      <button class="nav-link" type="button" onclick="showPage('panier')" id="nav-panier">Panier <span id="panier-count">(0)</span></button>
     </div>
     <button class="nav-burger" type="button" onclick="toggleMenu()" id="burger" aria-label="Menu" aria-controls="navLinks" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -1515,7 +1528,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       const count = document.getElementById('panier-count');
       const total = panierTotal();
       const configured = liensConfigures();
-      count.textContent = panier.length;
+      count.textContent = `(${panier.length})`;
       vide.style.display = panier.length ? 'none' : 'block';
       liste.innerHTML = panier.map(item => `
         <div class="panier-item">
