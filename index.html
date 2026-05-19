@@ -424,8 +424,7 @@
     }
     .btn-acheter:focus-visible,
     .format-btn:focus-visible,
-    .btn-commander:focus-visible,
-    .btn-paypal:focus-visible,
+    .btn-panier:focus-visible,
     .btn-fermer:focus-visible,
     .nav-burger:focus-visible {
       outline: 1px solid var(--accent);
@@ -561,35 +560,28 @@
       gap: 9px;
       margin-bottom: 14px;
     }
-    .btn-commander {
-      display: block;
-      text-align: center;
-      padding: 13px;
-      border: 1px solid #444;
-      color: var(--text);
-      text-decoration: none;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      font-family: var(--sans);
-      transition: border-color 0.2s;
-    }
-    .btn-commander:hover { border-color: var(--text); }
-    .btn-paypal {
+    .btn-panier {
       display: block;
       text-align: center;
       padding: 13px;
       background: var(--text);
       color: var(--bg);
+      border: 1px solid var(--text);
       text-decoration: none;
       font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       font-family: var(--sans);
       font-weight: 600;
+      cursor: pointer;
       transition: opacity 0.2s;
     }
-    .btn-paypal:hover { opacity: 0.85; }
+    .btn-panier:hover { opacity: 0.86; }
+    .btn-secondaire {
+      background: transparent;
+      color: var(--text);
+      border-color: #444;
+    }
     .modal-note {
       font-family: var(--sans);
       font-size: 11px;
@@ -608,18 +600,124 @@
       line-height: 1.7;
     }
     .commande-resume strong { color: var(--text); font-weight: 500; }
-    .commande-warning {
-      border-left: 1px solid var(--accent);
-      padding-left: 12px;
-      margin-bottom: 14px;
-      font-family: var(--sans);
-      font-size: 11px;
-      color: #a7a096;
-      line-height: 1.6;
-    }
     .action-disabled {
       opacity: 0.48;
       cursor: not-allowed;
+    }
+    .panier-feedback {
+      display: none;
+      border: 1px solid var(--border);
+      background: rgba(200,169,110,0.08);
+      padding: 14px;
+      margin: 0 0 14px;
+    }
+    .panier-feedback.visible { display: block; }
+    .panier-feedback p {
+      font-family: var(--sans);
+      font-size: 12px;
+      color: #cfc7b8;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .panier-feedback-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    /* ─────────────────────────────────────────
+       PANIER
+    ───────────────────────────────────────── */
+    .panier-layout {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 48px 24px 90px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 24px;
+      align-items: start;
+    }
+    .panier-liste {
+      display: grid;
+      gap: 2px;
+    }
+    .panier-item {
+      display: grid;
+      grid-template-columns: 96px minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 14px;
+    }
+    .panier-thumb {
+      width: 96px;
+      aspect-ratio: 3/2;
+      object-fit: cover;
+      background: var(--surface2);
+    }
+    .panier-item h3 {
+      font-size: 20px;
+      font-weight: 300;
+      margin-bottom: 4px;
+    }
+    .panier-item p,
+    .panier-total p,
+    .panier-vide {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: #948e86;
+      line-height: 1.7;
+    }
+    .panier-prix {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: var(--text);
+      white-space: nowrap;
+      text-align: right;
+    }
+    .btn-supprimer {
+      display: block;
+      margin-top: 8px;
+      background: transparent;
+      border: none;
+      color: #777;
+      cursor: pointer;
+      font-family: var(--sans);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-align: right;
+    }
+    .btn-supprimer:hover,
+    .btn-supprimer:focus-visible { color: var(--text); outline: none; }
+    .panier-total {
+      position: sticky;
+      top: 88px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 24px;
+    }
+    .panier-total h3 {
+      font-size: 24px;
+      font-weight: 300;
+      margin-bottom: 14px;
+    }
+    .panier-montant {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 16px 0;
+      margin: 16px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      font-family: var(--sans);
+      font-size: 13px;
+      color: var(--text);
+    }
+    .panier-actions {
+      display: grid;
+      gap: 9px;
     }
 
     /* ─────────────────────────────────────────
@@ -770,8 +868,14 @@
       .hero, .accueil-body { padding-left: 20px; padding-right: 20px; }
       .galerie { grid-template-columns: repeat(2, 1fr); }
       .info-grid,
-      .contact-actions { grid-template-columns: 1fr; }
+      .contact-actions,
+      .panier-feedback-actions,
+      .panier-layout { grid-template-columns: 1fr; }
       .commande-step { grid-template-columns: 1fr; }
+      .panier-total { position: static; }
+      .panier-item { grid-template-columns: 82px minmax(0, 1fr); }
+      .panier-prix { grid-column: 2; text-align: left; }
+      .btn-supprimer { text-align: left; }
       .modal-grid { grid-template-columns: 1fr; }
       .modal-img, .modal-img-placeholder { min-height: 220px; max-height: 260px; width: 100%; }
       .modal-infos { padding: 24px 20px; }
@@ -810,8 +914,7 @@
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
       <button class="nav-link" type="button" onclick="showPage('acheter')" id="nav-acheter">Acheter</button>
-      <button class="nav-link" type="button" onclick="showPage('infos')" id="nav-infos">Infos</button>
-      <button class="nav-link" type="button" onclick="showPage('contact')" id="nav-contact">Contact</button>
+      <button class="nav-link" type="button" onclick="showPage('panier')" id="nav-panier">Panier <span id="panier-count">0</span></button>
     </div>
     <button class="nav-burger" type="button" onclick="toggleMenu()" id="burger" aria-label="Menu" aria-controls="navLinks" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -872,6 +975,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
         <button class="footer-link" type="button" onclick="showPage('contact')">Contact</button>
+        <button class="footer-link" type="button" onclick="showPage('panier')">Panier</button>
         <button class="footer-link" type="button" onclick="showPage('cgv')">CGV & mentions</button>
       </div>
     </footer>
@@ -894,6 +998,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
         <button class="footer-link" type="button" onclick="showPage('contact')">Contact</button>
+        <button class="footer-link" type="button" onclick="showPage('panier')">Panier</button>
         <button class="footer-link" type="button" onclick="showPage('cgv')">CGV & mentions</button>
       </div>
     </footer>
@@ -959,6 +1064,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
         <button class="footer-link" type="button" onclick="showPage('contact')">Contact</button>
+        <button class="footer-link" type="button" onclick="showPage('panier')">Panier</button>
         <button class="footer-link" type="button" onclick="showPage('cgv')">CGV & mentions</button>
       </div>
     </footer>
@@ -1005,6 +1111,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
         <button class="footer-link" type="button" onclick="showPage('contact')">Contact</button>
+        <button class="footer-link" type="button" onclick="showPage('panier')">Panier</button>
         <button class="footer-link" type="button" onclick="showPage('cgv')">CGV & mentions</button>
       </div>
     </footer>
@@ -1041,6 +1148,50 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
         <button class="footer-link" type="button" onclick="showPage('contact')">Contact</button>
+        <button class="footer-link" type="button" onclick="showPage('panier')">Panier</button>
+        <button class="footer-link" type="button" onclick="showPage('cgv')">CGV & mentions</button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       PAGE : PANIER
+  ═══════════════════════════════════════ -->
+  <div class="page" id="page-panier">
+    <div class="page-header">
+      <p class="page-eyebrow">Commande</p>
+      <h2 class="page-titre">Votre panier</h2>
+      <p class="page-sous-titre">Vérifiez les tirages sélectionnés avant de finaliser la demande.</p>
+    </div>
+
+    <div class="panier-layout">
+      <div>
+        <div class="panier-liste" id="panier-liste"></div>
+        <p class="panier-vide" id="panier-vide">Votre panier est vide pour le moment.</p>
+      </div>
+      <aside class="panier-total">
+        <h3>Résumé</h3>
+        <p id="panier-resume">Aucun tirage sélectionné.</p>
+        <div class="panier-montant">
+          <span>Total</span>
+          <strong id="panier-total">0 €</strong>
+        </div>
+        <div class="panier-actions">
+          <a class="btn-panier" id="panier-form" href="#" target="_blank" rel="noopener">Finaliser la commande</a>
+          <a class="btn-panier btn-secondaire" id="panier-paypal" href="#" target="_blank" rel="noopener">Payer via PayPal</a>
+          <button class="btn-panier btn-secondaire" type="button" onclick="showPage('acheter')">Continuer les achats</button>
+          <button class="btn-panier btn-secondaire" type="button" onclick="viderPanier()">Vider le panier</button>
+        </div>
+        <p class="modal-note" id="panier-note">Mode test : connectez Google Form et PayPal avant la vente publique.</p>
+      </aside>
+    </div>
+
+    <footer>
+      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés
+      <div class="footer-links">
+        <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
+        <button class="footer-link" type="button" onclick="showPage('contact')">Contact</button>
+        <button class="footer-link" type="button" onclick="showPage('panier')">Panier</button>
         <button class="footer-link" type="button" onclick="showPage('cgv')">CGV & mentions</button>
       </div>
     </footer>
@@ -1088,6 +1239,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
         <button class="footer-link" type="button" onclick="showPage('contact')">Contact</button>
+        <button class="footer-link" type="button" onclick="showPage('panier')">Panier</button>
         <button class="footer-link" type="button" onclick="showPage('cgv')">CGV & mentions</button>
       </div>
     </footer>
@@ -1116,12 +1268,17 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
             </button>
           </div>
           <div class="commande-resume" id="commande-resume"></div>
-          <p class="commande-warning" id="commande-warning"></p>
-          <div class="actions">
-            <a class="btn-commander" id="lien-form" href="#" target="_blank" rel="noopener">📋 Passer commande</a>
-            <a class="btn-paypal" id="lien-paypal" href="#" target="_blank" rel="noopener">Payer via PayPal</a>
+          <div class="panier-feedback" id="panier-feedback">
+            <p id="panier-feedback-texte">Le tirage a été ajouté au panier.</p>
+            <div class="panier-feedback-actions">
+              <button class="btn-panier" type="button" onclick="fermerModal(); showPage('panier')">Voir le panier</button>
+              <button class="btn-panier btn-secondaire" type="button" onclick="fermerModal()">Continuer les achats</button>
+            </div>
           </div>
-          <p class="modal-note">Complétez le formulaire puis effectuez le paiement. Vous recevrez une confirmation par e-mail.</p>
+          <div class="actions">
+            <button class="btn-panier" type="button" onclick="ajouterAuPanier()">Ajouter au panier</button>
+          </div>
+          <p class="modal-note" id="modal-note">Ajoutez ce tirage au panier, puis finalisez la commande depuis la page panier.</p>
         </div>
       </div>
     </div>
@@ -1233,7 +1390,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
     // NAVIGATION
     // ─────────────────────────────────────────
     function showPage(name) {
-      ['accueil','photos','acheter','infos','contact','cgv'].forEach(p => {
+      ['accueil','photos','acheter','infos','contact','panier','cgv'].forEach(p => {
         document.getElementById('page-' + p).classList.toggle('visible', p === name);
         const nav = document.getElementById('nav-' + p);
         if (nav) nav.classList.toggle('actif', p === name);
@@ -1241,6 +1398,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       window.scrollTo(0, 0);
       document.getElementById('navLinks').classList.remove('open');
       document.getElementById('burger').setAttribute('aria-expanded', 'false');
+      afficherPanier();
     }
 
     function toggleMenu() {
@@ -1255,15 +1413,21 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
     let prixActuel = 20;
     let titreActuel = '';
     let formatActuelLabel = '10×15 cm';
+    let lieuActuel = '';
+    let srcActuel = '';
     let dernierFocus = null;
+    let panier = JSON.parse(sessionStorage.getItem('panierContrastes') || '[]');
 
     function ouvrirModal(titre, lieu, src) {
       dernierFocus = document.activeElement;
       titreActuel = titre;
+      lieuActuel = lieu;
+      srcActuel = src;
       prixActuel = 20;
       formatActuelLabel = '10×15 cm';
       document.getElementById('modal-titre').textContent = titre;
       document.getElementById('modal-lieu').textContent = lieu;
+      document.getElementById('panier-feedback').classList.remove('visible');
       const zone = document.getElementById('modal-img-zone');
       if (src) {
         zone.innerHTML = `<img class="modal-img" src="${src}" alt="${titre}" onerror="this.style.display='none'" />`;
@@ -1293,22 +1457,85 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
     }
 
     function mettreAJourLiens() {
-      const q = encodeURIComponent(titreActuel + ' — ' + formatActuelLabel);
-      const liensConfigures = !GOOGLE_FORM_BASE.includes('TON_FORM_ID') && !PAYPAL_BASE.includes('TON_COMPTE');
-      const lienForm = document.getElementById('lien-form');
-      const lienPaypal = document.getElementById('lien-paypal');
       document.getElementById('commande-resume').innerHTML = `<strong>Commande :</strong> ${titreActuel}<br><strong>Format :</strong> ${formatActuelLabel}<br><strong>Prix :</strong> ${prixActuel} €`;
-      document.getElementById('commande-warning').textContent = liensConfigures
-        ? 'Complétez le formulaire puis effectuez le paiement pour confirmer la commande.'
-        : 'Mode test : les liens Google Form et PayPal doivent encore être connectés avant la vente publique.';
-      lienForm.href = liensConfigures ? GOOGLE_FORM_BASE + q : '#';
-      lienPaypal.href = liensConfigures ? PAYPAL_BASE + prixActuel : '#';
-      lienForm.classList.toggle('action-disabled', !liensConfigures);
-      lienPaypal.classList.toggle('action-disabled', !liensConfigures);
-      lienForm.setAttribute('aria-disabled', liensConfigures ? 'false' : 'true');
-      lienPaypal.setAttribute('aria-disabled', liensConfigures ? 'false' : 'true');
-      lienForm.textContent = liensConfigures ? '📋 Passer commande' : 'Formulaire à connecter';
-      lienPaypal.textContent = liensConfigures ? 'Payer via PayPal — ' + prixActuel + ' €' : 'PayPal à connecter — ' + prixActuel + ' €';
+    }
+
+    function ajouterAuPanier() {
+      panier.push({
+        id: Date.now().toString(),
+        titre: titreActuel,
+        lieu: lieuActuel,
+        src: srcActuel,
+        format: formatActuelLabel,
+        prix: prixActuel
+      });
+      sauvegarderPanier();
+      document.getElementById('panier-feedback-texte').textContent = `"${titreActuel}" (${formatActuelLabel}) a été ajouté au panier.`;
+      document.getElementById('panier-feedback').classList.add('visible');
+    }
+
+    function sauvegarderPanier() {
+      sessionStorage.setItem('panierContrastes', JSON.stringify(panier));
+      afficherPanier();
+    }
+
+    function supprimerDuPanier(id) {
+      panier = panier.filter(item => item.id !== id);
+      sauvegarderPanier();
+    }
+
+    function viderPanier() {
+      panier = [];
+      sauvegarderPanier();
+    }
+
+    function panierTotal() {
+      return panier.reduce((total, item) => total + item.prix, 0);
+    }
+
+    function liensConfigures() {
+      return !GOOGLE_FORM_BASE.includes('TON_FORM_ID') && !PAYPAL_BASE.includes('TON_COMPTE');
+    }
+
+    function afficherPanier() {
+      const liste = document.getElementById('panier-liste');
+      const vide = document.getElementById('panier-vide');
+      const count = document.getElementById('panier-count');
+      const total = panierTotal();
+      const configured = liensConfigures();
+      count.textContent = panier.length;
+      vide.style.display = panier.length ? 'none' : 'block';
+      liste.innerHTML = panier.map(item => `
+        <div class="panier-item">
+          <img class="panier-thumb" src="${item.src}" alt="${item.titre}" onerror="this.style.display='none'" />
+          <div>
+            <h3>${item.titre}</h3>
+            <p>${item.lieu}<br>${item.format}</p>
+          </div>
+          <div class="panier-prix">
+            ${item.prix} €
+            <button class="btn-supprimer" type="button" onclick="supprimerDuPanier('${item.id}')">Retirer</button>
+          </div>
+        </div>
+      `).join('');
+      document.getElementById('panier-total').textContent = total + ' €';
+      document.getElementById('panier-resume').textContent = panier.length
+        ? `${panier.length} tirage${panier.length > 1 ? 's' : ''} sélectionné${panier.length > 1 ? 's' : ''}.`
+        : 'Aucun tirage sélectionné.';
+
+      const recap = panier.map(item => `${item.titre} — ${item.format} — ${item.prix} €`).join(' | ');
+      const form = document.getElementById('panier-form');
+      const paypal = document.getElementById('panier-paypal');
+      const disabled = !panier.length || !configured;
+      form.href = disabled ? '#' : GOOGLE_FORM_BASE + encodeURIComponent(recap + ' | Total : ' + total + ' €');
+      paypal.href = disabled ? '#' : PAYPAL_BASE + total;
+      form.classList.toggle('action-disabled', disabled);
+      paypal.classList.toggle('action-disabled', disabled);
+      form.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+      paypal.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+      document.getElementById('panier-note').textContent = configured
+        ? 'Finalisez le formulaire, puis réglez le total via PayPal pour confirmer la commande.'
+        : 'Mode test : connectez Google Form et PayPal avant la vente publique.';
     }
 
     // ─────────────────────────────────────────
@@ -1338,6 +1565,8 @@ document.addEventListener('click', e => {
   const action = e.target.closest('.action-disabled');
   if (action) e.preventDefault();
 });
+
+afficherPanier();
 
   </script>
 </body>
