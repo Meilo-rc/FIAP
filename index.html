@@ -543,11 +543,20 @@
       border: 1px solid var(--border);
       padding: 14px;
     }
-    .panier-thumb {
+    .panier-thumb-wrap {
       width: 96px;
-      aspect-ratio: 3/2;
-      object-fit: cover;
-      background: var(--surface2);
+      aspect-ratio: 1;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .panier-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
     .panier-item h3 {
       font-size: 20px;
@@ -802,7 +811,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.12</span>
+    <span class="nav-version">v1.13</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1317,7 +1326,9 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       vide.style.display = panier.length ? 'none' : 'block';
       liste.innerHTML = panier.map(item => `
         <div class="panier-item">
-          <img class="panier-thumb" src="${item.src}" alt="${item.titre}" onerror="this.style.display='none'" />
+          <div class="panier-thumb-wrap">
+            <img class="panier-thumb" src="${item.src}" alt="${item.titre}" onerror="this.style.display='none'" />
+          </div>
           <div>
             <h3>${item.titre}</h3>
             <p>${item.lieu}<br>${item.format}</p>
