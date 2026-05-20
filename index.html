@@ -711,6 +711,57 @@
       gap: 2px;
       margin-top: 28px;
     }
+    .contact-form {
+      display: grid;
+      gap: 16px;
+      margin-top: 28px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .contact-form-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .contact-field {
+      display: grid;
+      gap: 8px;
+    }
+    .contact-field label {
+      font-family: var(--sans);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #777;
+    }
+    .contact-field input,
+    .contact-field textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 13px 14px;
+      border-radius: 0;
+    }
+    .contact-field textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+    .contact-field input:focus,
+    .contact-field textarea:focus {
+      border-color: var(--text);
+      outline: none;
+    }
+    .contact-form .btn-panier {
+      width: fit-content;
+      min-width: 220px;
+      margin-top: 4px;
+    }
+    .contact-honeypot { display: none; }
     .contact-link,
     .footer-link {
       border: 1px solid var(--border);
@@ -774,6 +825,7 @@
       .hero, .accueil-body { padding-left: 20px; padding-right: 20px; }
       .galerie { grid-template-columns: repeat(2, 1fr); }
       .info-grid,
+      .contact-form-row,
       .contact-actions,
       .panier-feedback-actions,
       .panier-layout { grid-template-columns: 1fr; }
@@ -835,7 +887,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.15</span>
+    <span class="nav-version">v1.16</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -985,17 +1037,38 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
 
     <div class="content-page">
       <p class="intro-panel">
-        Pour finaliser le site, remplacez l’adresse ci-dessous par l’adresse de contact officielle de l’exposition.
+        Écrivez-nous pour une question sur un tirage, une livraison, une commande spéciale ou une disponibilité.
       </p>
+
+      <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contact" />
+        <p class="contact-honeypot">
+          <label>Ne pas remplir <input name="bot-field" /></label>
+        </p>
+        <div class="contact-form-row">
+          <div class="contact-field">
+            <label for="contact-nom">Nom</label>
+            <input id="contact-nom" name="nom" type="text" autocomplete="name" required />
+          </div>
+          <div class="contact-field">
+            <label for="contact-email">E-mail</label>
+            <input id="contact-email" name="email" type="email" autocomplete="email" required />
+          </div>
+        </div>
+        <div class="contact-field">
+          <label for="contact-sujet">Sujet</label>
+          <input id="contact-sujet" name="sujet" type="text" required />
+        </div>
+        <div class="contact-field">
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" required></textarea>
+        </div>
+        <button class="btn-panier" type="submit">Envoyer le message</button>
+      </form>
 
       <div class="contact-actions">
         <a class="contact-link" href="mailto:contact@contrastes-photo.fr?subject=Commande%20Contrastes">Écrire par e-mail</a>
         <button class="contact-link" type="button" onclick="showPage('photos')">Voir les tirages</button>
-      </div>
-
-      <div class="legal-block" style="margin-top: 34px;">
-        <h3>À compléter avant mise en ligne finale</h3>
-        <p>Adresse e-mail officielle, nom ou structure vendeuse, adresse postale professionnelle si nécessaire, lien Instagram ou portfolio, et modalités précises d’expédition.</p>
       </div>
     </div>
 
