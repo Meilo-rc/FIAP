@@ -482,6 +482,35 @@
       line-height: 1.65;
       font-style: italic;
     }
+    .form-modal {
+      max-width: 760px;
+      height: min(88vh, 920px);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .form-modal-header {
+      padding: 26px 54px 20px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-modal-header h2 {
+      font-size: 30px;
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .form-modal-header p {
+      font-family: var(--sans);
+      font-size: 12px;
+      color: #777;
+      line-height: 1.6;
+    }
+    .form-iframe {
+      width: 100%;
+      flex: 1;
+      border: 0;
+      background: #fff;
+    }
     .commande-resume {
       border: 1px solid var(--border);
       background: rgba(255,255,255,0.025);
@@ -911,7 +940,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.22</span>
+    <span class="nav-version">v1.23</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1138,7 +1167,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
           <strong id="panier-total">0 €</strong>
         </div>
         <div class="panier-actions">
-          <a class="btn-panier" id="panier-form" href="#" target="_blank" rel="noopener">Finaliser la commande</a>
+          <a class="btn-panier" id="panier-form" href="#" target="_blank" rel="noopener" onclick="ouvrirFormulaireCommande(event)">Finaliser la commande</a>
           <a class="btn-panier btn-secondaire" id="panier-paypal" href="#" target="_blank" rel="noopener">Payer via PayPal</a>
           <button class="btn-panier btn-secondaire" type="button" onclick="showPage('photos')">Continuer les achats</button>
           <button class="btn-panier btn-secondaire" type="button" onclick="viderPanier()">Vider le panier</button>
@@ -1240,6 +1269,17 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
           <p class="modal-note" id="modal-note">Ajoutez ce tirage au panier, puis finalisez la commande depuis la page panier.</p>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="form-overlay" onclick="fermerFormulaireCommande(event)">
+    <div class="modal form-modal" id="form-modal" role="dialog" aria-modal="true" aria-labelledby="form-modal-title" tabindex="-1">
+      <button class="btn-fermer" type="button" onclick="fermerFormulaireCommande()" aria-label="Fermer">✕</button>
+      <div class="form-modal-header">
+        <h2 id="form-modal-title">Finaliser la commande</h2>
+        <p>Le formulaire est prérempli avec votre panier. Validez-le, puis revenez au site pour régler via PayPal.</p>
+      </div>
+      <iframe class="form-iframe" id="commande-form-frame" title="Formulaire de commande Contrastes"></iframe>
     </div>
   </div>
 
@@ -1396,6 +1436,28 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       if (dernierFocus) dernierFocus.focus();
     }
 
+    function ouvrirFormulaireCommande(e) {
+      const form = document.getElementById('panier-form');
+      if (form.getAttribute('aria-disabled') === 'true' || form.href.endsWith('#')) {
+        if (e) e.preventDefault();
+        return;
+      }
+      if (e) e.preventDefault();
+      dernierFocus = document.activeElement;
+      document.getElementById('commande-form-frame').src = form.href.replace('viewform?', 'viewform?embedded=true&');
+      document.getElementById('form-overlay').classList.add('visible');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('form-modal').focus();
+    }
+
+    function fermerFormulaireCommande(e) {
+      if (e && e.target !== document.getElementById('form-overlay')) return;
+      document.getElementById('form-overlay').classList.remove('visible');
+      document.getElementById('commande-form-frame').src = '';
+      document.body.style.overflow = '';
+      if (dernierFocus) dernierFocus.focus();
+    }
+
     function choisirFormat(btn) {
       document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('actif'));
       btn.classList.add('actif');
@@ -1499,6 +1561,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
         fermerModal();
+        fermerFormulaireCommande();
       }
     });
 
