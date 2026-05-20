@@ -762,6 +762,25 @@
       margin-top: 4px;
     }
     .contact-honeypot { display: none; }
+    .contact-hosting {
+      max-width: 760px;
+      margin: 0 auto 34px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 30px;
+    }
+    .contact-hosting h3 {
+      font-size: 24px;
+      font-weight: 300;
+      margin-bottom: 14px;
+    }
+    .contact-hosting p {
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.8;
+      color: #948e86;
+    }
+    .contact-hosting p + p { margin-top: 14px; }
     .contact-link,
     .footer-link {
       border: 1px solid var(--border);
@@ -887,7 +906,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.16</span>
+    <span class="nav-version">v1.17</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1039,6 +1058,13 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       <p class="intro-panel">
         Écrivez-nous pour une question sur un tirage, une livraison, une commande spéciale ou une disponibilité.
       </p>
+
+      <div class="contact-hosting">
+        <h3>Accueillir l'exposition</h3>
+        <p>Contrastes est une exposition modulable, pensée pour s'adapter à des espaces variés — galeries, médiathèques, cafés culturels, lieux d'entreprise.</p>
+        <p>Elle réunit 42 photographies en tirage Fine Art, disponibles en différents formats selon la configuration de votre espace. Nous assurons nous-mêmes l'accrochage et restons disponibles durant toute la durée de l'exposition.</p>
+        <p>Si vous souhaitez nous accueillir ou en savoir plus, utilisez le formulaire ci-dessous ou contactez-nous directement par email.</p>
+      </div>
 
       <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="contact" />
