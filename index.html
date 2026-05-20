@@ -911,7 +911,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.20</span>
+    <span class="nav-version">v1.21</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1251,7 +1251,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
     // 🔧 LIENS À COMPLÉTER
     // ─────────────────────────────────────────
     const GOOGLE_FORM_BASE = "https://docs.google.com/forms/d/e/TON_FORM_ID/viewform?usp=pp_url&entry.123456789=";
-    const PAYPAL_BASE = "https://paypal.me/TON_COMPTE/";
+    const PAYPAL_BASE = "https://paypal.me/RichardFournillon/";
 
     // ─────────────────────────────────────────
     // PHOTOS
@@ -1442,8 +1442,12 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       return panier.reduce((total, item) => total + item.prix, 0);
     }
 
-    function liensConfigures() {
-      return !GOOGLE_FORM_BASE.includes('TON_FORM_ID') && !PAYPAL_BASE.includes('TON_COMPTE');
+    function formulaireConfigure() {
+      return !GOOGLE_FORM_BASE.includes('TON_FORM_ID');
+    }
+
+    function paypalConfigure() {
+      return !PAYPAL_BASE.includes('TON_COMPTE');
     }
 
     function afficherPanier() {
@@ -1451,7 +1455,8 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       const vide = document.getElementById('panier-vide');
       const count = document.getElementById('panier-count');
       const total = panierTotal();
-      const configured = liensConfigures();
+      const formConfigured = formulaireConfigure();
+      const paypalConfigured = paypalConfigure();
       count.textContent = `(${panier.length})`;
       vide.style.display = panier.length ? 'none' : 'block';
       liste.innerHTML = panier.map(item => `
@@ -1477,16 +1482,17 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       const recap = panier.map(item => `${item.titre} — ${item.format} — ${item.prix} €`).join(' | ');
       const form = document.getElementById('panier-form');
       const paypal = document.getElementById('panier-paypal');
-      const disabled = !panier.length || !configured;
-      form.href = disabled ? '#' : GOOGLE_FORM_BASE + encodeURIComponent(recap + ' | Total : ' + total + ' €');
-      paypal.href = disabled ? '#' : PAYPAL_BASE + total;
-      form.classList.toggle('action-disabled', disabled);
-      paypal.classList.toggle('action-disabled', disabled);
-      form.setAttribute('aria-disabled', disabled ? 'true' : 'false');
-      paypal.setAttribute('aria-disabled', disabled ? 'true' : 'false');
-      document.getElementById('panier-note').textContent = configured
-        ? 'Finalisez le formulaire, puis réglez le total via PayPal pour confirmer la commande.'
-        : 'Mode test : connectez Google Form et PayPal avant la vente publique.';
+      const formDisabled = !panier.length || !formConfigured;
+      const paypalDisabled = !panier.length || !paypalConfigured;
+      form.href = formDisabled ? '#' : GOOGLE_FORM_BASE + encodeURIComponent(recap + ' | Total : ' + total + ' €');
+      paypal.href = paypalDisabled ? '#' : PAYPAL_BASE + total;
+      form.classList.toggle('action-disabled', formDisabled);
+      paypal.classList.toggle('action-disabled', paypalDisabled);
+      form.setAttribute('aria-disabled', formDisabled ? 'true' : 'false');
+      paypal.setAttribute('aria-disabled', paypalDisabled ? 'true' : 'false');
+      document.getElementById('panier-note').textContent = paypalConfigured
+        ? 'Envoyez le détail de votre commande via le formulaire de contact, puis réglez le total via PayPal.'
+        : 'Mode test : connectez PayPal avant la vente publique.';
     }
 
     // Fermer modal avec Échap
