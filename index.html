@@ -536,16 +536,18 @@
     }
     .panier-item {
       display: grid;
-      grid-template-columns: 96px minmax(0, 1fr) auto;
+      grid-template-columns: 132px minmax(0, 1fr);
       gap: 18px;
-      align-items: center;
+      align-items: stretch;
       background: var(--surface);
       border: 1px solid var(--border);
       padding: 14px;
+      min-height: 132px;
     }
     .panier-thumb-wrap {
-      width: 96px;
-      aspect-ratio: 1;
+      width: 100%;
+      height: 100%;
+      min-height: 132px;
       background: var(--surface);
       display: flex;
       align-items: center;
@@ -557,6 +559,12 @@
       height: 100%;
       object-fit: contain;
       display: block;
+    }
+    .panier-details {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      justify-content: center;
     }
     .panier-item h3 {
       font-size: 20px;
@@ -575,8 +583,9 @@
       font-family: var(--sans);
       font-size: 13px;
       color: var(--text);
-      white-space: nowrap;
-      text-align: right;
+      margin-top: 12px;
+      white-space: normal;
+      text-align: left;
     }
     .btn-supprimer {
       display: block;
@@ -589,7 +598,7 @@
       font-size: 10px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      text-align: right;
+      text-align: left;
     }
     .btn-supprimer:hover,
     .btn-supprimer:focus-visible { color: var(--text); outline: none; }
@@ -776,9 +785,11 @@
       .panier-layout { grid-template-columns: 1fr; }
       .commande-step { grid-template-columns: 1fr; }
       .panier-total { position: static; }
-      .panier-item { grid-template-columns: 82px minmax(0, 1fr); }
-      .panier-prix { grid-column: 2; text-align: left; }
-      .btn-supprimer { text-align: left; }
+      .panier-item {
+        grid-template-columns: 96px minmax(0, 1fr);
+        min-height: 112px;
+      }
+      .panier-thumb-wrap { min-height: 112px; }
       .modal-grid { grid-template-columns: 1fr; }
       .modal-img, .modal-img-placeholder { width: 100%; }
       .modal-infos { padding: 24px 20px; }
@@ -811,7 +822,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.13</span>
+    <span class="nav-version">v1.14</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1329,13 +1340,13 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
           <div class="panier-thumb-wrap">
             <img class="panier-thumb" src="${item.src}" alt="${item.titre}" onerror="this.style.display='none'" />
           </div>
-          <div>
+          <div class="panier-details">
             <h3>${item.titre}</h3>
             <p>${item.lieu}<br>${item.format}</p>
-          </div>
-          <div class="panier-prix">
-            ${item.prix} €
-            <button class="btn-supprimer" type="button" onclick="supprimerDuPanier('${item.id}')">Retirer</button>
+            <div class="panier-prix">
+              ${item.prix} €
+              <button class="btn-supprimer" type="button" onclick="supprimerDuPanier('${item.id}')">Retirer</button>
+            </div>
           </div>
         </div>
       `).join('');
