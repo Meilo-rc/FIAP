@@ -558,6 +558,9 @@
       object-fit: contain;
       display: block;
     }
+    .panier-thumb-zoom {
+      transform: scale(1.38);
+    }
     .panier-details {
       min-width: 0;
     }
@@ -910,7 +913,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.18</span>
+    <span class="nav-version">v1.19</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1456,7 +1459,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       liste.innerHTML = panier.map(item => `
         <div class="panier-item">
           <div class="panier-thumb-wrap">
-            <img class="panier-thumb" src="${item.src}" alt="${item.titre}" onerror="this.style.display='none'" />
+            <img class="panier-thumb${item.src.includes('expo6.png') ? ' panier-thumb-zoom' : ''}" src="${item.src}" alt="${item.titre}" onerror="this.style.display='none'" />
           </div>
           <div class="panier-details">
             <h3>${item.titre}</h3>
