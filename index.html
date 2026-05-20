@@ -764,23 +764,27 @@
     .contact-honeypot { display: none; }
     .contact-hosting {
       max-width: 760px;
-      margin: 0 auto 34px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      padding: 30px;
+      margin: 0 auto 42px;
     }
     .contact-hosting h3 {
-      font-size: 24px;
+      font-size: clamp(34px, 5vw, 48px);
       font-weight: 300;
-      margin-bottom: 14px;
+      margin-bottom: 18px;
+      line-height: 1.05;
     }
     .contact-hosting p {
       font-family: var(--sans);
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1.8;
       color: #948e86;
     }
     .contact-hosting p + p { margin-top: 14px; }
+    .contact-form-title {
+      max-width: 760px;
+      margin: 0 auto 18px;
+      font-size: 28px;
+      font-weight: 300;
+    }
     .contact-link,
     .footer-link {
       border: 1px solid var(--border);
@@ -906,10 +910,11 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.17</span>
+    <span class="nav-version">v1.18</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
+      <button class="nav-link" type="button" onclick="showPage('contact')" id="nav-contact">Contact</button>
       <button class="nav-link" type="button" onclick="showPage('panier')" id="nav-panier">Panier <span id="panier-count">(0)</span></button>
     </div>
     <button class="nav-burger" type="button" onclick="toggleMenu()" id="burger" aria-label="Menu" aria-controls="navLinks" aria-expanded="false">
@@ -1066,6 +1071,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
         <p>Si vous souhaitez nous accueillir ou en savoir plus, utilisez le formulaire ci-dessous ou contactez-nous directement par email.</p>
       </div>
 
+      <h3 class="contact-form-title">Formulaire de contact</h3>
       <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="contact" />
         <p class="contact-honeypot">
