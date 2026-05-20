@@ -355,16 +355,24 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
     }
+    #modal-img-zone {
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--surface2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
     .modal-img {
       width: 100%;
       height: 100%;
-      min-height: 280px;
-      object-fit: cover;
+      object-fit: contain;
       display: block;
     }
     .modal-img-placeholder {
       width: 100%;
-      min-height: 280px;
+      height: 100%;
       background: var(--surface2);
       display: flex;
       align-items: center;
@@ -761,7 +769,7 @@
       .panier-prix { grid-column: 2; text-align: left; }
       .btn-supprimer { text-align: left; }
       .modal-grid { grid-template-columns: 1fr; }
-      .modal-img, .modal-img-placeholder { min-height: 220px; max-height: 260px; width: 100%; }
+      .modal-img, .modal-img-placeholder { width: 100%; }
       .modal-infos { padding: 24px 20px; }
     }
     @media (max-width: 480px) {
