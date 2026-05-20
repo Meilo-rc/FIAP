@@ -452,6 +452,7 @@
       gap: 9px;
       margin-bottom: 14px;
     }
+    .actions.masquee { display: none; }
     .btn-panier {
       display: block;
       text-align: center;
@@ -801,7 +802,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.10</span>
+    <span class="nav-version">v1.12</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1094,7 +1095,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
               <button class="btn-panier btn-secondaire" type="button" onclick="fermerModal()">Continuer les achats</button>
             </div>
           </div>
-          <div class="actions">
+          <div class="actions" id="ajout-panier-actions">
             <button class="btn-panier" type="button" onclick="ajouterAuPanier()">Ajouter au panier</button>
           </div>
           <p class="modal-note" id="modal-note">Ajoutez ce tirage au panier, puis finalisez la commande depuis la page panier.</p>
@@ -1235,6 +1236,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       document.getElementById('modal-titre').textContent = titre;
       document.getElementById('modal-lieu').textContent = lieu;
       document.getElementById('panier-feedback').classList.remove('visible');
+      document.getElementById('ajout-panier-actions').classList.remove('masquee');
       const zone = document.getElementById('modal-img-zone');
       if (src) {
         zone.innerHTML = `<img class="modal-img" src="${src}" alt="${titre}" onerror="this.style.display='none'" />`;
@@ -1279,6 +1281,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       sauvegarderPanier();
       document.getElementById('panier-feedback-texte').textContent = `"${titreActuel}" (${formatActuelLabel}) a été ajouté au panier.`;
       document.getElementById('panier-feedback').classList.add('visible');
+      document.getElementById('ajout-panier-actions').classList.add('masquee');
     }
 
     function sauvegarderPanier() {
