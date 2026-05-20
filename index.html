@@ -511,6 +511,16 @@
       border: 0;
       background: #fff;
     }
+    .form-modal-actions {
+      display: grid;
+      gap: 8px;
+      padding: 16px 28px 22px;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .form-modal-actions .modal-note {
+      text-align: center;
+    }
     .commande-resume {
       border: 1px solid var(--border);
       background: rgba(255,255,255,0.025);
@@ -940,7 +950,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.23</span>
+    <span class="nav-version">v1.24</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1280,6 +1290,10 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
         <p>Le formulaire est prérempli avec votre panier. Validez-le, puis revenez au site pour régler via PayPal.</p>
       </div>
       <iframe class="form-iframe" id="commande-form-frame" title="Formulaire de commande Contrastes"></iframe>
+      <div class="form-modal-actions">
+        <button class="btn-panier" type="button" onclick="confirmerFormulaireCommande()">J'ai envoyé le formulaire</button>
+        <p class="modal-note">Ce bouton active le paiement PayPal pour cette sélection.</p>
+      </div>
     </div>
   </div>
 
@@ -1458,6 +1472,21 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       if (dernierFocus) dernierFocus.focus();
     }
 
+    function signaturePanier() {
+      return panier.map(item => `${item.titre}|${item.format}|${item.prix}`).join('||');
+    }
+
+    function formulaireCommandeConfirme() {
+      return panier.length > 0 && sessionStorage.getItem('commandeFormulaireSignature') === signaturePanier();
+    }
+
+    function confirmerFormulaireCommande() {
+      if (!panier.length) return;
+      sessionStorage.setItem('commandeFormulaireSignature', signaturePanier());
+      fermerFormulaireCommande();
+      afficherPanier();
+    }
+
     function choisirFormat(btn) {
       document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('actif'));
       btn.classList.add('actif');
@@ -1519,6 +1548,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       const total = panierTotal();
       const formConfigured = formulaireConfigure();
       const paypalConfigured = paypalConfigure();
+      const formConfirmed = formulaireCommandeConfirme();
       count.textContent = `(${panier.length})`;
       vide.style.display = panier.length ? 'none' : 'block';
       liste.innerHTML = panier.map(item => `
@@ -1545,16 +1575,20 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       const form = document.getElementById('panier-form');
       const paypal = document.getElementById('panier-paypal');
       const formDisabled = !panier.length || !formConfigured;
-      const paypalDisabled = !panier.length || !paypalConfigured;
+      const paypalDisabled = !panier.length || !paypalConfigured || !formConfirmed;
       form.href = formDisabled ? '#' : GOOGLE_FORM_BASE + encodeURIComponent(recap + ' | Total : ' + total + ' €');
       paypal.href = paypalDisabled ? '#' : PAYPAL_BASE + total;
       form.classList.toggle('action-disabled', formDisabled);
       paypal.classList.toggle('action-disabled', paypalDisabled);
       form.setAttribute('aria-disabled', formDisabled ? 'true' : 'false');
       paypal.setAttribute('aria-disabled', paypalDisabled ? 'true' : 'false');
-      document.getElementById('panier-note').textContent = paypalConfigured
-        ? 'Envoyez le détail de votre commande via le formulaire de contact, puis réglez le total via PayPal.'
-        : 'Mode test : connectez PayPal avant la vente publique.';
+      document.getElementById('panier-note').textContent = !panier.length
+        ? 'Ajoutez un tirage au panier pour finaliser une commande.'
+        : !formConfirmed
+          ? 'Envoyez d’abord le formulaire de commande prérempli, puis confirmez son envoi pour activer PayPal.'
+          : paypalConfigured
+            ? 'Formulaire confirmé. Vous pouvez maintenant régler le total via PayPal.'
+            : 'Mode test : connectez PayPal avant la vente publique.';
     }
 
     // Fermer modal avec Échap
