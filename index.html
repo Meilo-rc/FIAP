@@ -911,7 +911,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.21</span>
+    <span class="nav-version">v1.22</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1250,7 +1250,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
     // ─────────────────────────────────────────
     // 🔧 LIENS À COMPLÉTER
     // ─────────────────────────────────────────
-    const GOOGLE_FORM_BASE = "https://docs.google.com/forms/d/e/TON_FORM_ID/viewform?usp=pp_url&entry.123456789=";
+    const GOOGLE_FORM_BASE = "https://docs.google.com/forms/d/e/1FAIpQLSeaqItjlFUgsZbkwpOph1Xlkohxb7mCbQ8EEkaj3pjHjHjmfQ/viewform?usp=pp_url&entry.1631460046=";
     const PAYPAL_BASE = "https://paypal.me/RichardFournillon/";
 
     // ─────────────────────────────────────────
@@ -1443,7 +1443,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
     }
 
     function formulaireConfigure() {
-      return !GOOGLE_FORM_BASE.includes('TON_FORM_ID');
+      return GOOGLE_FORM_BASE.includes('entry.1631460046=');
     }
 
     function paypalConfigure() {
