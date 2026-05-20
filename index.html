@@ -536,18 +536,16 @@
     }
     .panier-item {
       display: grid;
-      grid-template-columns: 132px minmax(0, 1fr);
+      grid-template-columns: 96px minmax(0, 1fr) auto;
       gap: 18px;
-      align-items: stretch;
+      align-items: center;
       background: var(--surface);
       border: 1px solid var(--border);
       padding: 14px;
-      min-height: 132px;
     }
     .panier-thumb-wrap {
-      width: 100%;
-      height: 100%;
-      min-height: 132px;
+      width: 96px;
+      aspect-ratio: 1;
       background: var(--surface);
       display: flex;
       align-items: center;
@@ -561,10 +559,7 @@
       display: block;
     }
     .panier-details {
-      display: flex;
       min-width: 0;
-      flex-direction: column;
-      justify-content: center;
     }
     .panier-item h3 {
       font-size: 20px;
@@ -583,9 +578,8 @@
       font-family: var(--sans);
       font-size: 13px;
       color: var(--text);
-      margin-top: 12px;
-      white-space: normal;
-      text-align: left;
+      white-space: nowrap;
+      text-align: right;
     }
     .btn-supprimer {
       display: block;
@@ -598,7 +592,7 @@
       font-size: 10px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      text-align: left;
+      text-align: right;
     }
     .btn-supprimer:hover,
     .btn-supprimer:focus-visible { color: var(--text); outline: none; }
@@ -787,9 +781,28 @@
       .panier-total { position: static; }
       .panier-item {
         grid-template-columns: 96px minmax(0, 1fr);
+        align-items: stretch;
         min-height: 112px;
       }
-      .panier-thumb-wrap { min-height: 112px; }
+      .panier-thumb-wrap {
+        grid-row: 1 / span 2;
+        width: 100%;
+        height: 100%;
+        min-height: 112px;
+        aspect-ratio: auto;
+      }
+      .panier-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+      }
+      .panier-prix {
+        grid-column: 2;
+        margin-top: 8px;
+        white-space: normal;
+        text-align: left;
+      }
+      .btn-supprimer { text-align: left; }
       .modal-grid { grid-template-columns: 1fr; }
       .modal-img, .modal-img-placeholder { width: 100%; }
       .modal-infos { padding: 24px 20px; }
@@ -822,7 +835,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.14</span>
+    <span class="nav-version">v1.15</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1343,10 +1356,10 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
           <div class="panier-details">
             <h3>${item.titre}</h3>
             <p>${item.lieu}<br>${item.format}</p>
-            <div class="panier-prix">
-              ${item.prix} €
-              <button class="btn-supprimer" type="button" onclick="supprimerDuPanier('${item.id}')">Retirer</button>
-            </div>
+          </div>
+          <div class="panier-prix">
+            ${item.prix} €
+            <button class="btn-supprimer" type="button" onclick="supprimerDuPanier('${item.id}')">Retirer</button>
           </div>
         </div>
       `).join('');
