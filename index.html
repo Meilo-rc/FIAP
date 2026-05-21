@@ -756,12 +756,6 @@
       line-height: 1.7;
       color: #918b83;
     }
-    .contact-actions {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 2px;
-      margin-top: 28px;
-    }
     .contact-form {
       display: grid;
       gap: 16px;
@@ -903,7 +897,6 @@
       .galerie { grid-template-columns: repeat(2, 1fr); }
       .info-grid,
       .contact-form-row,
-      .contact-actions,
       .panier-feedback-actions,
       .panier-layout { grid-template-columns: 1fr; }
       .commande-step { grid-template-columns: 1fr; }
@@ -964,7 +957,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.26</span>
+    <span class="nav-version">v1.27</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1153,10 +1146,6 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
         <p class="form-feedback" id="contact-feedback"></p>
       </form>
 
-      <div class="contact-actions">
-        <a class="contact-link" href="mailto:contact@contrastes-photo.fr?subject=Commande%20Contrastes">Écrire par e-mail</a>
-        <button class="contact-link" type="button" onclick="showPage('photos')">Voir les tirages</button>
-      </div>
     </div>
 
     <footer>
