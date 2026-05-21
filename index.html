@@ -505,11 +505,11 @@
       color: #777;
       line-height: 1.6;
     }
-    .form-iframe {
-      width: 100%;
-      flex: 1;
-      border: 0;
-      background: #fff;
+    .commande-form {
+      display: grid;
+      gap: 14px;
+      padding: 24px 28px 0;
+      overflow-y: auto;
     }
     .form-modal-actions {
       display: grid;
@@ -521,6 +521,17 @@
     .form-modal-actions .modal-note {
       text-align: center;
     }
+    .form-feedback {
+      display: none;
+      border: 1px solid var(--border);
+      background: rgba(200,169,110,0.08);
+      padding: 14px;
+      font-family: var(--sans);
+      font-size: 12px;
+      color: #cfc7b8;
+      line-height: 1.6;
+    }
+    .form-feedback.visible { display: block; }
     .commande-resume {
       border: 1px solid var(--border);
       background: rgba(255,255,255,0.025);
@@ -776,7 +787,8 @@
       color: #777;
     }
     .contact-field input,
-    .contact-field textarea {
+    .contact-field textarea,
+    .contact-field select {
       width: 100%;
       border: 1px solid var(--border);
       background: var(--surface2);
@@ -792,7 +804,8 @@
       resize: vertical;
     }
     .contact-field input:focus,
-    .contact-field textarea:focus {
+    .contact-field textarea:focus,
+    .contact-field select:focus {
       border-color: var(--text);
       outline: none;
     }
@@ -951,7 +964,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.25</span>
+    <span class="nav-version">v1.26</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1113,7 +1126,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       </div>
 
       <h3 class="contact-form-title">Formulaire de contact</h3>
-      <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <form class="contact-form" id="contact-form" name="contact" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="contact" />
         <p class="contact-honeypot">
           <label>Ne pas remplir <input name="bot-field" /></label>
@@ -1137,6 +1150,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
           <textarea id="contact-message" name="message" required></textarea>
         </div>
         <button class="btn-panier" type="submit">Envoyer le message</button>
+        <p class="form-feedback" id="contact-feedback"></p>
       </form>
 
       <div class="contact-actions">
@@ -1178,7 +1192,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
           <strong id="panier-total">0 €</strong>
         </div>
         <div class="panier-actions">
-          <a class="btn-panier" id="panier-form" href="#" target="_blank" rel="noopener" onclick="ouvrirFormulaireCommande(event)">Finaliser la commande</a>
+          <button class="btn-panier" id="panier-form" type="button" onclick="ouvrirFormulaireCommande(event)">Finaliser la commande</button>
           <a class="btn-panier btn-secondaire" id="panier-paypal" href="#" target="_blank" rel="noopener">Payer via PayPal</a>
           <button class="btn-panier btn-secondaire" type="button" onclick="showPage('photos')">Continuer les achats</button>
           <button class="btn-panier btn-secondaire" type="button" onclick="viderPanier()">Vider le panier</button>
@@ -1288,13 +1302,52 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       <button class="btn-fermer" type="button" onclick="fermerFormulaireCommande()" aria-label="Fermer">✕</button>
       <div class="form-modal-header">
         <h2 id="form-modal-title">Finaliser la commande</h2>
-        <p>Le formulaire est prérempli avec votre panier. Validez-le, puis revenez au site pour régler via PayPal.</p>
+        <p>Le formulaire est prérempli avec votre panier. Après envoi, le paiement PayPal sera activé.</p>
       </div>
-      <iframe class="form-iframe" id="commande-form-frame" title="Formulaire de commande Contrastes"></iframe>
-      <div class="form-modal-actions">
-        <button class="btn-panier" type="button" onclick="confirmerFormulaireCommande()">Je confirme la commande et je procède au paiement</button>
-        <p class="modal-note">Ce bouton active le paiement PayPal pour cette sélection.</p>
-      </div>
+      <form class="commande-form" id="commande-form" name="commande" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field-commande">
+        <input type="hidden" name="form-name" value="commande" />
+        <p class="contact-honeypot">
+          <label>Ne pas remplir <input name="bot-field-commande" /></label>
+        </p>
+        <div class="contact-form-row">
+          <div class="contact-field">
+            <label for="commande-nom">Nom</label>
+            <input id="commande-nom" name="nom" type="text" autocomplete="name" required />
+          </div>
+          <div class="contact-field">
+            <label for="commande-email">E-mail</label>
+            <input id="commande-email" name="email" type="email" autocomplete="email" required />
+          </div>
+        </div>
+        <div class="contact-form-row">
+          <div class="contact-field">
+            <label for="commande-telephone">Téléphone</label>
+            <input id="commande-telephone" name="telephone" type="tel" autocomplete="tel" />
+          </div>
+          <div class="contact-field">
+            <label for="commande-remise">Mode de remise</label>
+            <select id="commande-remise" name="remise">
+              <option value="À définir ensemble">À définir ensemble</option>
+              <option value="Remise en main propre">Remise en main propre</option>
+              <option value="Expédition">Expédition</option>
+            </select>
+          </div>
+        </div>
+        <div class="contact-field">
+          <label for="commande-details">Commande</label>
+          <textarea id="commande-details" name="details_commande" readonly required></textarea>
+        </div>
+        <div class="contact-field">
+          <label for="commande-message">Message</label>
+          <textarea id="commande-message" name="message"></textarea>
+        </div>
+        <input id="commande-total-input" name="total" type="hidden" />
+        <p class="form-feedback" id="commande-feedback"></p>
+        <div class="form-modal-actions">
+          <button class="btn-panier" type="submit">Je confirme la commande et je procède au paiement</button>
+          <p class="modal-note">PayPal sera activé après l'envoi réussi de cette commande.</p>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -1305,7 +1358,6 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
     // ─────────────────────────────────────────
     // 🔧 LIENS À COMPLÉTER
     // ─────────────────────────────────────────
-    const GOOGLE_FORM_BASE = "https://docs.google.com/forms/d/e/1FAIpQLSeaqItjlFUgsZbkwpOph1Xlkohxb7mCbQ8EEkaj3pjHjHjmfQ/viewform?usp=pp_url&entry.1631460046=";
     const PAYPAL_BASE = "https://paypal.me/RichardFournillon/";
 
     // ─────────────────────────────────────────
@@ -1452,14 +1504,19 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
     }
 
     function ouvrirFormulaireCommande(e) {
-      const form = document.getElementById('panier-form');
-      if (form.getAttribute('aria-disabled') === 'true' || form.href.endsWith('#')) {
+      const action = document.getElementById('panier-form');
+      if (action.getAttribute('aria-disabled') === 'true') {
         if (e) e.preventDefault();
         return;
       }
       if (e) e.preventDefault();
       dernierFocus = document.activeElement;
-      document.getElementById('commande-form-frame').src = form.href.replace('viewform?', 'viewform?embedded=true&');
+      const details = panier.map(item => `${item.titre} — ${item.format} — ${item.prix} €`).join('\n');
+      const total = panierTotal();
+      document.getElementById('commande-details').value = `${details}\n\nTotal : ${total} €`;
+      document.getElementById('commande-total-input').value = `${total} €`;
+      document.getElementById('commande-feedback').classList.remove('visible');
+      document.getElementById('commande-feedback').textContent = '';
       document.getElementById('form-overlay').classList.add('visible');
       document.body.style.overflow = 'hidden';
       document.getElementById('form-modal').focus();
@@ -1468,9 +1525,17 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
     function fermerFormulaireCommande(e) {
       if (e && e.target !== document.getElementById('form-overlay')) return;
       document.getElementById('form-overlay').classList.remove('visible');
-      document.getElementById('commande-form-frame').src = '';
       document.body.style.overflow = '';
       if (dernierFocus) dernierFocus.focus();
+    }
+
+    async function envoyerNetlifyForm(form) {
+      const data = new FormData(form);
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data).toString()
+      });
     }
 
     function signaturePanier() {
@@ -1479,13 +1544,6 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
 
     function formulaireCommandeConfirme() {
       return panier.length > 0 && sessionStorage.getItem('commandeFormulaireSignature') === signaturePanier();
-    }
-
-    function confirmerFormulaireCommande() {
-      if (!panier.length) return;
-      sessionStorage.setItem('commandeFormulaireSignature', signaturePanier());
-      fermerFormulaireCommande();
-      afficherPanier();
     }
 
     function choisirFormat(btn) {
@@ -1534,10 +1592,6 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       return panier.reduce((total, item) => total + item.prix, 0);
     }
 
-    function formulaireConfigure() {
-      return GOOGLE_FORM_BASE.includes('entry.1631460046=');
-    }
-
     function paypalConfigure() {
       return !PAYPAL_BASE.includes('TON_COMPTE');
     }
@@ -1547,7 +1601,6 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       const vide = document.getElementById('panier-vide');
       const count = document.getElementById('panier-count');
       const total = panierTotal();
-      const formConfigured = formulaireConfigure();
       const paypalConfigured = paypalConfigure();
       const formConfirmed = formulaireCommandeConfirme();
       count.textContent = `(${panier.length})`;
@@ -1572,12 +1625,10 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
         ? `${panier.length} tirage${panier.length > 1 ? 's' : ''} sélectionné${panier.length > 1 ? 's' : ''}.`
         : 'Aucun tirage sélectionné.';
 
-      const recap = panier.map(item => `${item.titre} — ${item.format} — ${item.prix} €`).join(' | ');
       const form = document.getElementById('panier-form');
       const paypal = document.getElementById('panier-paypal');
-      const formDisabled = !panier.length || !formConfigured || formConfirmed;
+      const formDisabled = !panier.length || formConfirmed;
       const paypalDisabled = !panier.length || !paypalConfigured || !formConfirmed;
-      form.href = formDisabled ? '#' : GOOGLE_FORM_BASE + encodeURIComponent(recap + ' | Total : ' + total + ' €');
       paypal.href = paypalDisabled ? '#' : PAYPAL_BASE + total;
       form.classList.toggle('action-disabled', formDisabled);
       paypal.classList.toggle('action-disabled', paypalDisabled);
@@ -1587,11 +1638,57 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       document.getElementById('panier-note').textContent = !panier.length
         ? 'Ajoutez un tirage au panier pour finaliser une commande.'
         : !formConfirmed
-          ? 'Envoyez d’abord le formulaire de commande prérempli, puis confirmez son envoi pour activer PayPal.'
+          ? 'Envoyez d’abord le formulaire de commande prérempli pour activer PayPal.'
           : paypalConfigured
-            ? 'Formulaire confirmé. Vous pouvez maintenant régler le total via PayPal.'
+            ? 'Commande envoyée. Vous pouvez maintenant régler le total via PayPal.'
             : 'Mode test : connectez PayPal avant la vente publique.';
     }
+
+    document.getElementById('commande-form').addEventListener('submit', async e => {
+      e.preventDefault();
+      const form = e.currentTarget;
+      const feedback = document.getElementById('commande-feedback');
+      const submit = form.querySelector('button[type="submit"]');
+      feedback.classList.remove('visible');
+      feedback.textContent = '';
+      submit.disabled = true;
+      submit.textContent = 'Envoi en cours...';
+      try {
+        await envoyerNetlifyForm(form);
+        sessionStorage.setItem('commandeFormulaireSignature', signaturePanier());
+        fermerFormulaireCommande();
+        afficherPanier();
+      } catch (error) {
+        feedback.textContent = "L'envoi n'a pas abouti. Vérifiez votre connexion ou réessayez après le déploiement Netlify.";
+        feedback.classList.add('visible');
+      } finally {
+        submit.disabled = false;
+        submit.textContent = 'Je confirme la commande et je procède au paiement';
+      }
+    });
+
+    document.getElementById('contact-form').addEventListener('submit', async e => {
+      e.preventDefault();
+      const form = e.currentTarget;
+      const feedback = document.getElementById('contact-feedback');
+      const submit = form.querySelector('button[type="submit"]');
+      feedback.classList.remove('visible');
+      feedback.textContent = '';
+      submit.disabled = true;
+      submit.textContent = 'Envoi en cours...';
+      try {
+        await envoyerNetlifyForm(form);
+        form.reset();
+        feedback.textContent = 'Merci, votre message a bien été envoyé.';
+        feedback.classList.add('visible');
+      } catch (error) {
+        feedback.textContent = "L'envoi n'a pas abouti. Vérifiez votre connexion ou réessayez après le déploiement Netlify.";
+        feedback.classList.add('visible');
+      } finally {
+        submit.disabled = false;
+        submit.textContent = 'Envoyer le message';
+      }
+    });
 
     // Fermer modal avec Échap
     document.addEventListener('keydown', e => {
