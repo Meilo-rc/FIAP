@@ -535,6 +535,7 @@
     .action-disabled {
       opacity: 0.48;
       cursor: not-allowed;
+      pointer-events: none;
     }
     .panier-feedback {
       display: none;
@@ -950,7 +951,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.24</span>
+    <span class="nav-version">v1.25</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1291,7 +1292,7 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       </div>
       <iframe class="form-iframe" id="commande-form-frame" title="Formulaire de commande Contrastes"></iframe>
       <div class="form-modal-actions">
-        <button class="btn-panier" type="button" onclick="confirmerFormulaireCommande()">J'ai envoyé le formulaire</button>
+        <button class="btn-panier" type="button" onclick="confirmerFormulaireCommande()">Je confirme la commande et je procède au paiement</button>
         <p class="modal-note">Ce bouton active le paiement PayPal pour cette sélection.</p>
       </div>
     </div>
@@ -1574,12 +1575,13 @@ Certaines de ces photos, nous les avons prises ensemble, côte à côte, parfois
       const recap = panier.map(item => `${item.titre} — ${item.format} — ${item.prix} €`).join(' | ');
       const form = document.getElementById('panier-form');
       const paypal = document.getElementById('panier-paypal');
-      const formDisabled = !panier.length || !formConfigured;
+      const formDisabled = !panier.length || !formConfigured || formConfirmed;
       const paypalDisabled = !panier.length || !paypalConfigured || !formConfirmed;
       form.href = formDisabled ? '#' : GOOGLE_FORM_BASE + encodeURIComponent(recap + ' | Total : ' + total + ' €');
       paypal.href = paypalDisabled ? '#' : PAYPAL_BASE + total;
       form.classList.toggle('action-disabled', formDisabled);
       paypal.classList.toggle('action-disabled', paypalDisabled);
+      paypal.classList.toggle('btn-secondaire', paypalDisabled);
       form.setAttribute('aria-disabled', formDisabled ? 'true' : 'false');
       paypal.setAttribute('aria-disabled', paypalDisabled ? 'true' : 'false');
       document.getElementById('panier-note').textContent = !panier.length
