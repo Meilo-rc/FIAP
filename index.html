@@ -948,7 +948,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.31</span>
+    <span class="nav-version">v1.32</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1537,7 +1537,11 @@
         prix: prixActuel
       });
       sauvegarderPanier();
-      document.getElementById('panier-feedback-texte').textContent = `"${titreActuel}" (${formatActuelLabel}) a été ajouté au panier.`;
+      const feedback = document.getElementById('panier-feedback-texte');
+      const titreFeedback = document.createElement('em');
+      titreFeedback.textContent = titreActuel;
+      feedback.textContent = '';
+      feedback.append(titreFeedback, ` (format ${formatActuelLabel}) a été ajouté au panier.`);
       document.getElementById('panier-feedback').classList.add('visible');
       document.getElementById('ajout-panier-actions').classList.add('masquee');
     }
