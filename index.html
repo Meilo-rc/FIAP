@@ -534,17 +534,6 @@
       line-height: 1.6;
     }
     .form-feedback.visible { display: block; }
-    .commande-resume {
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.025);
-      padding: 12px 14px;
-      margin: 0 0 16px;
-      font-family: var(--sans);
-      font-size: 11px;
-      color: #aaa;
-      line-height: 1.7;
-    }
-    .commande-resume strong { color: var(--text); font-weight: 500; }
     .action-disabled {
       opacity: 0.48;
       cursor: not-allowed;
@@ -553,7 +542,7 @@
     .panier-feedback {
       display: none;
       border: 1px solid var(--border);
-      background: rgba(200,169,110,0.08);
+      background: var(--surface2);
       padding: 14px;
       margin: 0 0 14px;
     }
@@ -959,7 +948,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.30</span>
+    <span class="nav-version">v1.31</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1267,7 +1256,6 @@
               <span>29,7x42 cm</span><span class="format-prix">50 €</span>
             </button>
           </div>
-          <div class="commande-resume" id="commande-resume"></div>
           <div class="panier-feedback" id="panier-feedback">
             <p id="panier-feedback-texte">Le tirage a été ajouté au panier.</p>
             <div class="panier-feedback-actions">
@@ -1477,7 +1465,6 @@
         zone.innerHTML = `<div class="modal-img-placeholder">[ Photo ]</div>`;
       }
       document.querySelectorAll('.format-btn').forEach((b, i) => b.classList.toggle('actif', i === 0));
-      mettreAJourLiens();
       document.getElementById('overlay').classList.add('visible');
       document.body.style.overflow = 'hidden';
       document.getElementById('modal').focus();
@@ -1538,11 +1525,6 @@
       btn.classList.add('actif');
       prixActuel = parseInt(btn.dataset.prix);
       formatActuelLabel = btn.querySelector('span:first-child').textContent;
-      mettreAJourLiens();
-    }
-
-    function mettreAJourLiens() {
-      document.getElementById('commande-resume').innerHTML = `<strong>Commande :</strong> ${titreActuel}<br><strong>Format :</strong> ${formatActuelLabel}<br><strong>Prix :</strong> ${prixActuel} €`;
     }
 
     function ajouterAuPanier() {
