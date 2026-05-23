@@ -956,7 +956,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.33</span>
+    <span class="nav-version">v1.34</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1264,13 +1264,13 @@
               <span>29,7×42 cm</span>
             </button>
           </div>
-          <p class="label-format">Encadrement :</p>
+          <p class="label-format">Option d'encadrement :</p>
           <div class="formats">
             <button class="format-btn encadrement-option actif" type="button" data-type="seul" onclick="choisirEncadrement(this)">
               <span>Tirage Fine Art seul</span><span class="format-prix" id="prix-seul">20 €</span>
             </button>
             <button class="format-btn encadrement-option" type="button" data-type="cadre" onclick="choisirEncadrement(this)">
-              <span id="label-cadre">Tirage avec cadre 23×31,7 cm avec passe-partout blanc</span><span class="format-prix" id="prix-cadre">40 €</span>
+              <span id="label-cadre">Encadrement 23×31,7 cm avec passe-partout blanc</span><span class="format-prix" id="prix-cadre">40 €</span>
             </button>
           </div>
           <div class="panier-feedback" id="panier-feedback">
@@ -1563,10 +1563,10 @@
       formatActuelLabel = formatActif.dataset.format;
       document.getElementById('prix-seul').textContent = prixSeul + ' €';
       document.getElementById('prix-cadre').textContent = prixCadre + ' €';
-      document.getElementById('label-cadre').textContent = `Tirage avec ${formatActif.dataset.cadre}`;
+      document.getElementById('label-cadre').textContent = `Encadrement ${formatActif.dataset.cadre.replace(/^cadre /, '')}`;
       prixActuel = avecCadre ? prixCadre : prixSeul;
       encadrementActuelLabel = avecCadre
-        ? `Tirage avec ${formatActif.dataset.cadre}`
+        ? `Encadrement ${formatActif.dataset.cadre.replace(/^cadre /, '')}`
         : 'Tirage Fine Art seul';
     }
 
