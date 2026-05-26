@@ -956,7 +956,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.36</span>
+    <span class="nav-version">v1.37</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1462,14 +1462,17 @@
     let encadrementActuelLabel = 'Tirage Fine Art seul';
     let lieuActuel = '';
     let srcActuel = '';
+    let srcAfficheActuel = '';
     let dernierFocus = null;
     let panier = JSON.parse(sessionStorage.getItem('panierContrastes') || '[]');
+    const SRC_ENCADREMENT_DEMO = 'photos/expo12c.png';
 
     function ouvrirModal(titre, lieu, src) {
       dernierFocus = document.activeElement;
       titreActuel = titre;
       lieuActuel = lieu;
       srcActuel = src;
+      srcAfficheActuel = src;
       prixActuel = 20;
       formatActuelLabel = '13×18 cm';
       encadrementActuelLabel = 'Tirage Fine Art seul';
@@ -1477,12 +1480,7 @@
       document.getElementById('modal-lieu').textContent = lieu;
       document.getElementById('panier-feedback').classList.remove('visible');
       document.getElementById('ajout-panier-actions').classList.remove('masquee');
-      const zone = document.getElementById('modal-img-zone');
-      if (src) {
-        zone.innerHTML = `<img class="modal-img" src="${src}" alt="${titre}" onerror="this.style.display='none'" />`;
-      } else {
-        zone.innerHTML = `<div class="modal-img-placeholder">[ Photo ]</div>`;
-      }
+      afficherImageModal(srcAfficheActuel);
       document.querySelectorAll('.tirage-format').forEach((b, i) => b.classList.toggle('actif', i === 0));
       document.querySelectorAll('.encadrement-option').forEach((b, i) => b.classList.toggle('actif', i === 0));
       mettreAJourOptionsAchat();
@@ -1496,6 +1494,15 @@
       document.getElementById('overlay').classList.remove('visible');
       document.body.style.overflow = '';
       if (dernierFocus) dernierFocus.focus();
+    }
+
+    function afficherImageModal(src) {
+      const zone = document.getElementById('modal-img-zone');
+      if (src) {
+        zone.innerHTML = `<img class="modal-img" src="${src}" alt="${titreActuel}" onerror="this.style.display='none'" />`;
+      } else {
+        zone.innerHTML = `<div class="modal-img-placeholder">[ Photo ]</div>`;
+      }
     }
 
     function ouvrirFormulaireCommande(e) {
@@ -1568,6 +1575,8 @@
       encadrementActuelLabel = avecCadre
         ? `Encadrement ${formatActif.dataset.cadre.replace(/^cadre /, '')}`
         : 'Tirage Fine Art seul';
+      srcAfficheActuel = avecCadre ? SRC_ENCADREMENT_DEMO : srcActuel;
+      afficherImageModal(srcAfficheActuel);
     }
 
     function ajouterAuPanier() {
@@ -1575,7 +1584,7 @@
         id: Date.now().toString(),
         titre: titreActuel,
         lieu: lieuActuel,
-        src: srcActuel,
+        src: srcAfficheActuel,
         format: formatActuelLabel,
         encadrement: encadrementActuelLabel,
         prix: prixActuel
