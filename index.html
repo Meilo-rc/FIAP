@@ -956,7 +956,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.37</span>
+    <span class="nav-version">v1.38</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1465,7 +1465,6 @@
     let srcAfficheActuel = '';
     let dernierFocus = null;
     let panier = JSON.parse(sessionStorage.getItem('panierContrastes') || '[]');
-    const SRC_ENCADREMENT_DEMO = 'photos/expo12c.png';
 
     function ouvrirModal(titre, lieu, src) {
       dernierFocus = document.activeElement;
@@ -1503,6 +1502,10 @@
       } else {
         zone.innerHTML = `<div class="modal-img-placeholder">[ Photo ]</div>`;
       }
+    }
+
+    function srcEncadree(src) {
+      return src ? src.replace(/\.png$/i, 'c.png') : '';
     }
 
     function ouvrirFormulaireCommande(e) {
@@ -1575,7 +1578,7 @@
       encadrementActuelLabel = avecCadre
         ? `Encadrement ${formatActif.dataset.cadre.replace(/^cadre /, '')}`
         : 'Tirage Fine Art seul';
-      srcAfficheActuel = avecCadre ? SRC_ENCADREMENT_DEMO : srcActuel;
+      srcAfficheActuel = avecCadre ? srcEncadree(srcActuel) : srcActuel;
       afficherImageModal(srcAfficheActuel);
     }
 
