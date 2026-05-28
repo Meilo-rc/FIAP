@@ -956,7 +956,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.38</span>
+    <span class="nav-version">v1.39</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1057,13 +1057,13 @@
 
     <div class="content-page">
       <p class="intro-panel">
-        Chaque tirage est préparé à la demande, signé à la main et vérifié avant remise ou expédition. Les commandes sont confirmées par e-mail après réception du formulaire et du paiement.
+        Chaque tirage est préparé à la demande, signé à la main et vérifié avant remise ou expédition. Les réservations sont confirmées par e-mail après réception du formulaire.
       </p>
 
       <div class="info-grid">
         <div class="info-card">
           <h3>Prix</h3>
-          <p>13×18 cm : 20 € seul, 40 € avec cadre · 21×29,7 cm : 35 € seul, 60 € avec cadre · 29,7×42 cm : 50 € seul, 80 € avec cadre. Les frais d’expédition éventuels sont confirmés avant paiement.</p>
+          <p>13×18 cm : 20 € seul, 40 € avec cadre · 21×29,7 cm : 35 € seul, 60 € avec cadre · 29,7×42 cm : 50 € seul, 80 € avec cadre. Les frais d’expédition éventuels sont confirmés par e-mail.</p>
         </div>
         <div class="info-card">
           <h3>Papier</h3>
@@ -1077,7 +1077,7 @@
 
       <div class="legal-block">
         <h3>Commande spéciale</h3>
-        <p>Pour un autre format, un envoi postal, une commande groupée ou une question sur une œuvre, utilisez la page Contact avant de régler.</p>
+        <p>Pour un autre format, un envoi postal, une commande groupée ou une question sur une œuvre, utilisez la page Contact avant d’envoyer votre demande.</p>
       </div>
     </div>
 
@@ -1158,9 +1158,9 @@
   ═══════════════════════════════════════ -->
   <div class="page" id="page-panier">
     <div class="page-header">
-      <p class="page-eyebrow">Commande</p>
-      <h2 class="page-titre">Votre panier</h2>
-      <p class="page-sous-titre">Vérifiez les tirages sélectionnés avant de finaliser la demande.</p>
+      <p class="page-eyebrow">Réservation</p>
+      <h2 class="page-titre">Votre sélection</h2>
+      <p class="page-sous-titre">Vérifiez les tirages sélectionnés avant d’envoyer votre demande.</p>
     </div>
 
     <div class="panier-layout">
@@ -1172,16 +1172,15 @@
         <h3>Résumé</h3>
         <p id="panier-resume">Aucun tirage sélectionné.</p>
         <div class="panier-montant">
-          <span>Total</span>
+          <span>Total estimé</span>
           <strong id="panier-total">0 €</strong>
         </div>
         <div class="panier-actions">
-          <button class="btn-panier" id="panier-form" type="button" onclick="ouvrirFormulaireCommande(event)">Finaliser la commande</button>
-          <a class="btn-panier btn-secondaire" id="panier-paypal" href="#" target="_blank" rel="noopener">Payer via PayPal</a>
+          <button class="btn-panier" id="panier-form" type="button" onclick="ouvrirFormulaireCommande(event)">Envoyer ma demande</button>
           <button class="btn-panier btn-secondaire" type="button" onclick="showPage('photos')">Continuer les achats</button>
           <button class="btn-panier btn-secondaire" type="button" onclick="viderPanier()">Vider le panier</button>
         </div>
-        <p class="modal-note" id="panier-note">Mode test : connectez Google Form et PayPal avant la vente publique.</p>
+        <p class="modal-note" id="panier-note">Ajoutez un tirage au panier pour envoyer une demande de réservation.</p>
       </aside>
     </div>
 
@@ -1215,8 +1214,8 @@
         <p>Photographies vendues sous forme de tirages Fine Art Baryta FB 350 g/m², signés à la main. Les visuels présentés en ligne peuvent légèrement différer du rendu imprimé selon les écrans.</p>
       </div>
       <div class="legal-block">
-        <h3>Prix et paiement</h3>
-        <p>Les prix sont indiqués en euros. Le paiement s’effectue via PayPal. Toute commande est validée après réception du formulaire de commande et du paiement correspondant.</p>
+        <h3>Prix et réservation</h3>
+        <p>Les prix sont indiqués en euros. Le formulaire permet d’envoyer une demande de réservation ; les modalités de paiement sont ensuite confirmées directement par e-mail.</p>
       </div>
       <div class="legal-block">
         <h3>Livraison</h3>
@@ -1224,7 +1223,7 @@
       </div>
       <div class="legal-block">
         <h3>Rétractation et retours</h3>
-        <p>À compléter avec la règle applicable à votre mode de vente. Pour les ventes à distance, le droit de rétractation et ses exceptions doivent être présentés clairement avant paiement.</p>
+        <p>À compléter avec la règle applicable à votre mode de vente. Pour les ventes à distance, le droit de rétractation et ses exceptions doivent être présentés clairement avant confirmation définitive.</p>
       </div>
       <div class="legal-block">
         <h3>Données personnelles</h3>
@@ -1283,7 +1282,7 @@
           <div class="actions" id="ajout-panier-actions">
             <button class="btn-panier" type="button" onclick="ajouterAuPanier()">Ajouter au panier</button>
           </div>
-          <p class="modal-note" id="modal-note">Ajoutez ce tirage au panier, puis finalisez la commande depuis la page panier.</p>
+          <p class="modal-note" id="modal-note">Ajoutez ce tirage au panier, puis envoyez votre demande depuis la page panier.</p>
         </div>
       </div>
     </div>
@@ -1293,8 +1292,8 @@
     <div class="modal form-modal" id="form-modal" role="dialog" aria-modal="true" aria-labelledby="form-modal-title" tabindex="-1">
       <button class="btn-fermer" type="button" onclick="fermerFormulaireCommande()" aria-label="Fermer">✕</button>
       <div class="form-modal-header">
-        <h2 id="form-modal-title">Finaliser la commande</h2>
-        <p>Le formulaire est prérempli avec votre panier. Après envoi, le paiement PayPal sera activé.</p>
+        <h2 id="form-modal-title">Demande de réservation</h2>
+        <p>Le formulaire est prérempli avec votre panier. Nous vous recontactons ensuite par e-mail pour confirmer la disponibilité et les modalités de paiement.</p>
       </div>
       <form class="commande-form" id="commande-form" name="commande" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field-commande">
         <input type="hidden" name="form-name" value="commande" />
@@ -1326,7 +1325,7 @@
           </div>
         </div>
         <div class="contact-field">
-          <label for="commande-details">Commande</label>
+          <label for="commande-details">Sélection</label>
           <textarea id="commande-details" name="details_commande" readonly required></textarea>
         </div>
         <div class="contact-field">
@@ -1336,8 +1335,8 @@
         <input id="commande-total-input" name="total" type="hidden" />
         <p class="form-feedback" id="commande-feedback"></p>
         <div class="form-modal-actions">
-          <button class="btn-panier" type="submit">Je confirme la commande et je procède au paiement</button>
-          <p class="modal-note">PayPal sera activé après l'envoi réussi de cette commande.</p>
+          <button class="btn-panier" type="submit">Envoyer la demande de réservation</button>
+          <p class="modal-note">Aucun paiement n’est effectué sur le site.</p>
         </div>
       </form>
     </div>
@@ -1347,11 +1346,6 @@
        JAVASCRIPT
   ═══════════════════════════════════════ -->
   <script>
-    // ─────────────────────────────────────────
-    // 🔧 LIENS À COMPLÉTER
-    // ─────────────────────────────────────────
-    const PAYPAL_BASE = "https://paypal.me/RichardFournillon/";
-
     // ─────────────────────────────────────────
     // PHOTOS
     // 🔧 Pour chaque photo, remplace src: "" par le chemin du fichier
@@ -1547,7 +1541,7 @@
       return panier.map(item => `${item.titre}|${item.format}|${item.encadrement || 'Tirage Fine Art seul'}|${item.prix}`).join('||');
     }
 
-    function formulaireCommandeConfirme() {
+    function reservationEnvoyee() {
       return panier.length > 0 && sessionStorage.getItem('commandeFormulaireSignature') === signaturePanier();
     }
 
@@ -1621,17 +1615,12 @@
       return panier.reduce((total, item) => total + item.prix, 0);
     }
 
-    function paypalConfigure() {
-      return !PAYPAL_BASE.includes('TON_COMPTE');
-    }
-
     function afficherPanier() {
       const liste = document.getElementById('panier-liste');
       const vide = document.getElementById('panier-vide');
       const count = document.getElementById('panier-count');
       const total = panierTotal();
-      const paypalConfigured = paypalConfigure();
-      const formConfirmed = formulaireCommandeConfirme();
+      const reservationConfirmed = reservationEnvoyee();
       count.textContent = `(${panier.length})`;
       vide.style.display = panier.length ? 'none' : 'block';
       liste.innerHTML = panier.map(item => `
@@ -1655,22 +1644,14 @@
         : 'Aucun tirage sélectionné.';
 
       const form = document.getElementById('panier-form');
-      const paypal = document.getElementById('panier-paypal');
-      const formDisabled = !panier.length || formConfirmed;
-      const paypalDisabled = !panier.length || !paypalConfigured || !formConfirmed;
-      paypal.href = paypalDisabled ? '#' : PAYPAL_BASE + total;
+      const formDisabled = !panier.length || reservationConfirmed;
       form.classList.toggle('action-disabled', formDisabled);
-      paypal.classList.toggle('action-disabled', paypalDisabled);
-      paypal.classList.toggle('btn-secondaire', paypalDisabled);
       form.setAttribute('aria-disabled', formDisabled ? 'true' : 'false');
-      paypal.setAttribute('aria-disabled', paypalDisabled ? 'true' : 'false');
       document.getElementById('panier-note').textContent = !panier.length
-        ? 'Ajoutez un tirage au panier pour finaliser une commande.'
-        : !formConfirmed
-          ? 'Envoyez d’abord le formulaire de commande prérempli pour activer PayPal.'
-          : paypalConfigured
-            ? 'Commande envoyée. Vous pouvez maintenant régler le total via PayPal.'
-            : 'Mode test : connectez PayPal avant la vente publique.';
+        ? 'Ajoutez un tirage au panier pour envoyer une demande de réservation.'
+        : reservationConfirmed
+          ? 'Votre demande de réservation a été envoyée. Nous vous répondrons par e-mail.'
+          : 'Envoyez le formulaire prérempli pour réserver les tirages sélectionnés.';
     }
 
     document.getElementById('commande-form').addEventListener('submit', async e => {
@@ -1692,7 +1673,7 @@
         feedback.classList.add('visible');
       } finally {
         submit.disabled = false;
-        submit.textContent = 'Je confirme la commande et je procède au paiement';
+        submit.textContent = 'Envoyer la demande de réservation';
       }
     });
 
