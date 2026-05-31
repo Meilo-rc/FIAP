@@ -441,6 +441,7 @@
       transition: all 0.15s;
       width: 100%;
     }
+    .format-btn[hidden] { display: none; }
     .format-btn:hover,
     .format-btn.actif {
       border-color: var(--text);
@@ -956,7 +957,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.41</span>
+    <span class="nav-version">v1.42</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
