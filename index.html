@@ -826,6 +826,12 @@
       color: #948e86;
     }
     .contact-hosting p + p { margin-top: 14px; }
+    .inline-link {
+      color: var(--text);
+      text-decoration: underline;
+      text-decoration-color: var(--accent);
+      text-underline-offset: 3px;
+    }
     .contact-form-title {
       max-width: 760px;
       margin: 0 auto 18px;
@@ -957,7 +963,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.42</span>
+    <span class="nav-version">v1.43</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1112,7 +1118,7 @@
         <h3>Accueillir l'exposition</h3>
         <p>Contrastes est une exposition modulable, pensée pour s'adapter à des espaces variés — galeries, médiathèques, cafés culturels, lieux d'entreprise.</p>
         <p>Elle réunit 42 photographies en tirage Fine Art, disponibles en différents formats selon la configuration de votre espace. Nous assurons nous-mêmes l'accrochage et restons disponibles durant toute la durée de l'exposition.</p>
-        <p>Si vous souhaitez nous accueillir ou en savoir plus, utilisez le formulaire ci-dessous ou contactez-nous directement par email.</p>
+        <p>Si vous souhaitez nous accueillir ou en savoir plus, utilisez le formulaire ci-dessous ou contactez-nous directement par e-mail : <a class="inline-link" href="mailto:gaellestreetphotography@gmail.com">gaellestreetphotography@gmail.com</a>.</p>
       </div>
 
       <h3 class="contact-form-title">Formulaire de contact</h3>
@@ -1209,7 +1215,7 @@
     <div class="content-page">
       <div class="legal-block">
         <h3>Vendeur</h3>
-        <p>À compléter : identité du vendeur ou de la structure, statut juridique, adresse, e-mail de contact, numéro SIRET si applicable, responsable de publication et hébergeur du site.</p>
+        <p>À compléter : identité des photographes ou de la structure, statut juridique, adresse, numéro SIRET si applicable, responsable de publication et hébergeur du site. Contact : <a class="inline-link" href="mailto:gaellestreetphotography@gmail.com">gaellestreetphotography@gmail.com</a>.</p>
       </div>
       <div class="legal-block">
         <h3>Produits</h3>
@@ -1217,19 +1223,19 @@
       </div>
       <div class="legal-block">
         <h3>Prix et réservation</h3>
-        <p>Les prix sont indiqués en euros. Le formulaire permet d’envoyer une demande de réservation ; les modalités de paiement sont ensuite confirmées directement par e-mail.</p>
+        <p>Les prix sont indiqués en euros. Le formulaire permet d’envoyer une demande de réservation ; les modalités de paiement sont ensuite confirmées directement par e-mail. Le paiement peut notamment être effectué par PayPal, virement bancaire ou tout autre moyen convenu lors des échanges.</p>
       </div>
       <div class="legal-block">
         <h3>Remise et expédition</h3>
-        <p>Remise en mains propres à Paris ou expédition selon accord préalable. Les frais et modalités sont confirmés par e-mail avant validation définitive.</p>
+        <p>La remise des tirages se fait principalement en main propre, à une date et dans un lieu convenus avec le demandeur. Une expédition peut être envisagée au cas par cas, après accord préalable sur les frais et modalités d’envoi.</p>
       </div>
       <div class="legal-block">
         <h3>Rétractation et retours</h3>
-        <p>À compléter avec la règle applicable à votre mode de vente. Pour les ventes à distance, le droit de rétractation et ses exceptions doivent être présentés clairement avant confirmation définitive.</p>
+        <p>L’envoi du formulaire constitue une demande de réservation et ne vaut pas commande ferme. La vente n’est considérée comme conclue qu’après confirmation par e-mail des photographes, accord sur le tirage, le format, les modalités de remise et le mode de paiement. En cas de vente conclue à distance, les conditions applicables au droit de rétractation, aux retours ou aux éventuelles exceptions seront précisées avant validation définitive. Les tirages réalisés à la demande, signés, encadrés ou préparés selon des choix spécifiques peuvent faire l’objet de conditions particulières.</p>
       </div>
       <div class="legal-block">
         <h3>Données personnelles</h3>
-        <p>Les informations transmises via le formulaire servent uniquement au traitement de la commande et aux échanges liés à celle-ci. À compléter avec la durée de conservation et les outils utilisés.</p>
+        <p>Les informations transmises via le formulaire servent uniquement au traitement de la demande de réservation et aux échanges liés à celle-ci. Pour toute demande concernant vos données personnelles : <a class="inline-link" href="mailto:gaellestreetphotography@gmail.com">gaellestreetphotography@gmail.com</a>. À compléter avec la durée de conservation et les outils utilisés.</p>
       </div>
     </div>
 
@@ -1298,7 +1304,7 @@
       <button class="btn-fermer" type="button" onclick="fermerFormulaireCommande()" aria-label="Fermer">✕</button>
       <div class="form-modal-header">
         <h2 id="form-modal-title">Demande de réservation</h2>
-        <p>Le formulaire est prérempli avec votre panier. Nous vous recontactons ensuite par e-mail pour confirmer la disponibilité et les modalités de paiement.</p>
+        <p>Le formulaire est prérempli avec votre panier. Nous vous recontactons ensuite par e-mail pour confirmer la disponibilité, la remise principalement en main propre et le mode de paiement hors site.</p>
       </div>
       <form class="commande-form" id="commande-form" name="commande" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field-commande">
         <input type="hidden" name="form-name" value="commande" />
