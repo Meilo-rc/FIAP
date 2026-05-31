@@ -957,7 +957,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.45</span>
+    <span class="nav-version">v1.46</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1065,7 +1065,7 @@
         <div class="info-card">
           <h3>Prix</h3>
           <p>13×18 cm : 20 € seul, 40 € avec cadre · 21×29,7 cm : 35 € seul, 60 € avec cadre · 29,7×42 cm : 50 € seul, 80 € avec cadre. Les frais d’expédition éventuels sont confirmés par e-mail.</p>
-          <p>Format 50×70 cm disponible sur certaines photographies : 60 € seul, 90 € avec encadrement 70×100 cm et passe-partout blanc.</p>
+          <p>Format 50×75 cm disponible sur certaines photographies : 60 € seul, 90 € avec encadrement 70×100 cm et passe-partout blanc.</p>
         </div>
         <div class="info-card">
           <h3>Papier</h3>
@@ -1301,8 +1301,8 @@
             <button class="format-btn tirage-format" type="button" data-format="29,7×42 cm" data-prix-seul="50" data-prix-cadre="80" data-cadre="cadre 42×52 cm avec passe-partout blanc" onclick="choisirFormat(this)">
               <span>29,7×42 cm</span>
             </button>
-            <button class="format-btn tirage-format format-special" id="format-50x70" type="button" data-format="50×70 cm" data-prix-seul="60" data-prix-cadre="90" data-cadre="cadre 70×100 cm avec passe-partout blanc" onclick="choisirFormat(this)" hidden>
-              <span>50×70 cm</span>
+            <button class="format-btn tirage-format format-special" id="format-50x75" type="button" data-format="50×75 cm" data-prix-seul="60" data-prix-cadre="90" data-cadre="cadre 70×100 cm avec passe-partout blanc" onclick="choisirFormat(this)" hidden>
+              <span>50×75 cm</span>
             </button>
           </div>
           <p class="label-format">Option d'encadrement :</p>
@@ -1546,7 +1546,7 @@
     }
 
     function mettreAJourFormatsDisponibles(src) {
-      const formatSpecial = document.getElementById('format-50x70');
+      const formatSpecial = document.getElementById('format-50x75');
       const grandFormatDisponible = /^photos\/expo[1-5]\.png$/i.test(src);
       formatSpecial.hidden = !grandFormatDisponible;
       formatSpecial.setAttribute('aria-hidden', grandFormatDisponible ? 'false' : 'true');
