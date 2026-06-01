@@ -137,7 +137,7 @@
     .hero-img-wrap {
       width: 100%;
       aspect-ratio: 16/9;
-      background: var(--surface);
+      background: var(--bg);
       overflow: hidden;
       position: relative;
       display: flex;
@@ -339,6 +339,7 @@
       max-height: 90vh;
       overflow-y: auto;
     }
+    #modal { background: #1e1e1e; }
     .btn-fermer {
       position: absolute;
       top: 14px; right: 14px;
@@ -361,7 +362,7 @@
     #modal-img-zone {
       width: 100%;
       aspect-ratio: 1;
-      background: var(--surface);
+      background: #1e1e1e;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -376,7 +377,7 @@
     .modal-img-placeholder {
       width: 100%;
       height: 100%;
-      background: var(--surface);
+      background: #1e1e1e;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -957,7 +958,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.47</span>
+    <span class="nav-version">v1.48</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1065,17 +1066,16 @@
       <div class="info-grid">
         <div class="info-card">
           <h3>Prix</h3>
-          <p>13×18 cm : 20 € seul, 40 € avec cadre · 21×29,7 cm : 35 € seul, 60 € avec cadre · 29,7×42 cm : 50 € seul, 80 € avec cadre. Les frais d’expédition éventuels sont confirmés par e-mail.</p>
-          <p>Format 50×75 cm disponible sur certaines photographies : 60 € seul, 90 € avec encadrement 70×100 cm et passe-partout blanc.</p>
+          <p>13×18 cm : 20 € tirage simple<br>13×18 cm avec cadre 23×31,7 cm et passe-partout blanc : 40 €</p>
+          <p>21×29,7 cm : 35 € tirage simple<br>21×29,7 cm avec cadre 32×42 cm et passe-partout blanc : 60 €</p>
+          <p>29,7×42 cm : 50 € tirage simple<br>29,7×42 cm avec cadre 42×52 cm et passe-partout blanc : 80 €</p>
+          <p>50×75 cm disponible sur certaines photographies : 60 € tirage simple<br>50×75 cm avec cadre 70×100 cm et passe-partout blanc : 90 €</p>
+          <p>Les frais d’expédition éventuels sont confirmés par e-mail.</p>
         </div>
         <div class="info-card">
           <h3>Papier</h3>
           <p>Formats 13×18, 21×29,7 et 29,7×42 : tirage Fine Art Baryta FB 350 g/m². Format 50×75 : tirage sur papier HP Premium 250 g/m².</p>
           <p>Le rendu privilégie la profondeur des noirs, les contrastes et la tenue des détails.</p>
-        </div>
-        <div class="info-card">
-          <h3>Cadres</h3>
-          <p>13×18 cm : cadre 23×31,7 cm avec passe-partout blanc · 21×29,7 cm : cadre 32×42 cm avec passe-partout blanc · 29,7×42 cm : cadre 42×52 cm avec passe-partout blanc · 50×75 cm : cadre 70×100 cm avec passe-partout blanc.</p>
         </div>
         <div class="info-card">
           <h3>Disponibilité</h3>
