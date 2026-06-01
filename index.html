@@ -957,7 +957,7 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.46</span>
+    <span class="nav-version">v1.47</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1059,6 +1059,7 @@
     <div class="content-page">
       <p class="intro-panel">
         Chaque tirage est préparé à la demande, signé à la main et vérifié avant remise ou expédition. Les réservations sont confirmées par e-mail après réception du formulaire.
+        Chaque photographie est proposée en tirage signé et numéroté, dans la limite de 30 exemplaires tous formats et supports confondus.
       </p>
 
       <div class="info-grid">
@@ -1069,7 +1070,12 @@
         </div>
         <div class="info-card">
           <h3>Papier</h3>
-          <p>Tirage Fine Art Baryta FB 350 g/m². Le rendu privilégie la profondeur des noirs, les contrastes et la tenue des détails.</p>
+          <p>Formats 13×18, 21×29,7 et 29,7×42 : tirage Fine Art Baryta FB 350 g/m². Format 50×75 : tirage sur papier HP Premium 250 g/m².</p>
+          <p>Le rendu privilégie la profondeur des noirs, les contrastes et la tenue des détails.</p>
+        </div>
+        <div class="info-card">
+          <h3>Cadres</h3>
+          <p>13×18 cm : cadre 23×31,7 cm avec passe-partout blanc · 21×29,7 cm : cadre 32×42 cm avec passe-partout blanc · 29,7×42 cm : cadre 42×52 cm avec passe-partout blanc · 50×75 cm : cadre 70×100 cm avec passe-partout blanc.</p>
         </div>
         <div class="info-card">
           <h3>Disponibilité</h3>
@@ -1223,7 +1229,8 @@
       </div>
       <div class="legal-block">
         <h3>3. Tirages proposés</h3>
-        <p>Les photographies sont proposées sous forme de tirages Fine Art Baryta FB 350 g/m², signés à la main.</p>
+        <p>Les photographies sont proposées sous forme de tirages signés et numérotés, dans la limite de 30 exemplaires tous formats et supports confondus.</p>
+        <p>Les formats 13×18, 21×29,7 et 29,7×42 sont réalisés en tirage Fine Art Baryta FB 350 g/m². Le format 50×75 est réalisé sur papier HP Premium 250 g/m².</p>
         <p>Les formats, options d’encadrement et prix affichés sur le site sont présentés à titre d’information et peuvent être confirmés ou ajustés par e-mail avant validation définitive.</p>
         <p>Les visuels présentés en ligne peuvent légèrement différer du rendu imprimé selon les écrans, les conditions d’affichage et les réglages de luminosité.</p>
       </div>
@@ -1289,7 +1296,7 @@
         <div class="modal-infos">
           <p class="modal-lieu" id="modal-lieu"></p>
           <h2 class="modal-titre" id="modal-titre"></h2>
-          <p class="modal-desc">Tirage Fine Art Baryta FB 350g/m² · Signé</p>
+          <p class="modal-desc" id="modal-papier">Tirage Fine Art Baryta FB 350 g/m² · Signé et numéroté</p>
           <p class="label-format">Choisir un format :</p>
           <div class="formats">
             <button class="format-btn tirage-format actif" type="button" data-format="13×18 cm" data-prix-seul="20" data-prix-cadre="40" data-cadre="cadre 23×31,7 cm avec passe-partout blanc" onclick="choisirFormat(this)">
@@ -1619,6 +1626,9 @@
       document.getElementById('prix-seul').textContent = prixSeul + ' €';
       document.getElementById('prix-cadre').textContent = prixCadre + ' €';
       document.getElementById('label-cadre').textContent = `Encadrement ${formatActif.dataset.cadre.replace(/^cadre /, '')}`;
+      document.getElementById('modal-papier').textContent = formatActuelLabel === '50×75 cm'
+        ? 'Tirage sur papier HP Premium 250 g/m² · Signé et numéroté'
+        : 'Tirage Fine Art Baryta FB 350 g/m² · Signé et numéroté';
       prixActuel = avecCadre ? prixCadre : prixSeul;
       encadrementActuelLabel = avecCadre
         ? `Encadrement ${formatActif.dataset.cadre.replace(/^cadre /, '')}`
