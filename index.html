@@ -65,17 +65,6 @@
     }
     .nav-logo:focus-visible { outline: 1px solid var(--accent); outline-offset: 5px; }
     .nav-logo span { color: var(--accent); }
-    .nav-version {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: var(--sans);
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      color: #555;
-      text-transform: uppercase;
-      pointer-events: none;
-    }
     .nav-links {
       display: flex;
       gap: 36px;
@@ -904,7 +893,6 @@
     ───────────────────────────────────────── */
     @media (max-width: 768px) {
       nav { padding: 0 20px; }
-      .nav-version { display: none; }
       .nav-links { display: none; }
       .nav-links.open {
         display: flex;
@@ -985,7 +973,6 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.50</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
@@ -1047,7 +1034,7 @@
     </div>
 
     <footer>
-      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés
+      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — v1.51
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('photos')">Photos</button>
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
@@ -1070,7 +1057,7 @@
     <div class="galerie" id="galerie"></div>
 
     <footer>
-      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés
+      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — v1.51
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('photos')">Photos</button>
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
@@ -1123,7 +1110,7 @@
     </div>
 
     <footer>
-      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés
+      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — v1.51
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('photos')">Photos</button>
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
@@ -1186,7 +1173,7 @@
     </div>
 
     <footer>
-      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés
+      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — v1.51
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('photos')">Photos</button>
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
@@ -1228,7 +1215,7 @@
     </div>
 
     <footer>
-      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés
+      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — v1.51
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('photos')">Photos</button>
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
@@ -1314,7 +1301,7 @@
     </div>
 
     <footer>
-      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés
+      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — v1.51
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('photos')">Photos</button>
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
@@ -1435,7 +1422,7 @@
     const translations = {
       fr: {
         nav: { accueil: 'Accueil', photos: 'Photos', contact: 'Contact', panier: 'Panier', infos: 'Infos commande', conditions: 'Conditions' },
-        footer: '© Gaëlle Christmann et Richard Fournillon — Tous droits réservés',
+        footer: '© Gaëlle Christmann et Richard Fournillon — Tous droits réservés — v1.51',
         home: {
           eyebrow: 'Exposition photographique',
           paragraphs: [
@@ -1551,7 +1538,7 @@
       },
       en: {
         nav: { accueil: 'Home', photos: 'Photos', contact: 'Contact', panier: 'Basket', infos: 'Order info', conditions: 'Terms' },
-        footer: '© Gaëlle Christmann and Richard Fournillon — All rights reserved',
+        footer: '© Gaëlle Christmann and Richard Fournillon — All rights reserved — v1.51',
         home: {
           eyebrow: 'Photography exhibition',
           paragraphs: [
@@ -1559,8 +1546,8 @@
             'Welcome to the virtual exhibition CONTRASTES',
             'You are entering an exhibition born from friendship and a shared passion: photographing the street as it is, raw, alive, unpredictable. Street photography is first and foremost about revealing the beauty of ordinary things, the visual harmony inside the urban disorder.',
             'We are Gaëlle Christmann and Richard Fournillon. Cameras in hand, we walk the streets looking for the precise moment when an ordinary scene becomes meaningful, poetic, or sometimes unsettling. Those instants when a stranger becomes, for the time of a photograph, the central character of a story that seems to tell itself. A fleeting scene that never happens twice.',
-            'What you will see here is what stopped us, what compelled us to press the shutter. Deep blacks and bright lights reveal monochrome silhouettes and redraw buildings or entire streets. Sometimes colour too, when the street demanded it. And always the same obsession: what happens when light meets shadow, when movement freezes, when the anonymous becomes the subject.',
-            '<em>Contrastes</em> is forty-two images. Forty-two stolen moments.'
+            'Deep blacks and bright lights, revealing monochrome silhouettes, and redrawing buildings or entire streets. Sometimes colour too, when the street demanded it. And always the same obsession: what happens when light meets shadow, when movement freezes, when the anonymous becomes the subject.',
+            '<em>Contrastes</em>, it is forty-two images. Forty-two stolen moments.'
           ],
           meta: '<strong>Photographers</strong> — Gaëlle Christmann &amp; Richard Fournillon'
         },
