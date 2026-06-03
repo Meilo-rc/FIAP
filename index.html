@@ -100,6 +100,29 @@
       border-bottom: 1px solid var(--accent);
       padding-bottom: 2px;
     }
+    .lang-switch {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      margin-left: 12px;
+      border: 1px solid var(--border);
+      padding: 3px;
+    }
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-family: var(--sans);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      padding: 6px 8px;
+      text-transform: uppercase;
+    }
+    .lang-btn.actif {
+      background: var(--surface2);
+      color: var(--text);
+    }
     .nav-burger {
       display: none;
       flex-direction: column;
@@ -893,6 +916,10 @@
         padding: 20px;
         gap: 20px;
       }
+      .lang-switch {
+        margin-left: auto;
+        margin-right: 52px;
+      }
       .nav-burger { display: flex; }
       .hero, .accueil-body { padding-left: 20px; padding-right: 20px; }
       .galerie { grid-template-columns: repeat(2, 1fr); }
@@ -958,12 +985,16 @@
   ═══════════════════════════════════════ -->
   <nav>
     <button class="nav-logo" type="button" onclick="showPage('accueil')">Cont<span>r</span>astes</button>
-    <span class="nav-version">v1.49</span>
+    <span class="nav-version">v1.50</span>
     <div class="nav-links" id="navLinks">
       <button class="nav-link actif" type="button" onclick="showPage('accueil')" id="nav-accueil">Accueil</button>
       <button class="nav-link" type="button" onclick="showPage('photos')" id="nav-photos">Photos</button>
       <button class="nav-link" type="button" onclick="showPage('contact')" id="nav-contact">Contact</button>
       <button class="nav-link" type="button" onclick="showPage('panier')" id="nav-panier">Panier <span id="panier-count">(0)</span></button>
+    </div>
+    <div class="lang-switch" aria-label="Choix de la langue">
+      <button class="lang-btn actif" type="button" data-lang="fr" onclick="changerLangue('fr')">FR</button>
+      <button class="lang-btn" type="button" data-lang="en" onclick="changerLangue('en')">EN</button>
     </div>
     <button class="nav-burger" type="button" onclick="toggleMenu()" id="burger" aria-label="Menu" aria-controls="navLinks" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -1305,16 +1336,16 @@
           <p class="modal-desc" id="modal-papier">Tirage Fine Art Baryta FB 350 g/m² · Signé et numéroté</p>
           <p class="label-format">Choisir un format :</p>
           <div class="formats">
-            <button class="format-btn tirage-format actif" type="button" data-format="13×18 cm" data-prix-seul="20" data-prix-cadre="40" data-cadre="cadre 23×31,7 cm avec passe-partout blanc" onclick="choisirFormat(this)">
+            <button class="format-btn tirage-format actif" type="button" data-format="13×18 cm" data-prix-seul="20" data-prix-cadre="40" data-cadre="cadre 23×31,7 cm avec passe-partout blanc" data-cadre-en="23×31.7 cm frame with white mat" onclick="choisirFormat(this)">
               <span>13×18 cm</span>
             </button>
-            <button class="format-btn tirage-format" type="button" data-format="21×29,7 cm" data-prix-seul="35" data-prix-cadre="60" data-cadre="cadre 32×42 cm avec passe-partout blanc" onclick="choisirFormat(this)">
+            <button class="format-btn tirage-format" type="button" data-format="21×29,7 cm" data-prix-seul="35" data-prix-cadre="60" data-cadre="cadre 32×42 cm avec passe-partout blanc" data-cadre-en="32×42 cm frame with white mat" onclick="choisirFormat(this)">
               <span>21×29,7 cm</span>
             </button>
-            <button class="format-btn tirage-format" type="button" data-format="29,7×42 cm" data-prix-seul="50" data-prix-cadre="80" data-cadre="cadre 42×52 cm avec passe-partout blanc" onclick="choisirFormat(this)">
+            <button class="format-btn tirage-format" type="button" data-format="29,7×42 cm" data-prix-seul="50" data-prix-cadre="80" data-cadre="cadre 42×52 cm avec passe-partout blanc" data-cadre-en="42×52 cm frame with white mat" onclick="choisirFormat(this)">
               <span>29,7×42 cm</span>
             </button>
-            <button class="format-btn tirage-format format-special" id="format-50x75" type="button" data-format="50×75 cm" data-prix-seul="60" data-prix-cadre="90" data-cadre="cadre 70×100 cm avec passe-partout blanc" onclick="choisirFormat(this)" hidden>
+            <button class="format-btn tirage-format format-special" id="format-50x75" type="button" data-format="50×75 cm" data-prix-seul="60" data-prix-cadre="90" data-cadre="cadre 70×100 cm avec passe-partout blanc" data-cadre-en="70×100 cm frame with white mat" onclick="choisirFormat(this)" hidden>
               <span>50×75 cm</span>
             </button>
           </div>
@@ -1401,6 +1432,384 @@
        JAVASCRIPT
   ═══════════════════════════════════════ -->
   <script>
+    const translations = {
+      fr: {
+        nav: { accueil: 'Accueil', photos: 'Photos', contact: 'Contact', panier: 'Panier', infos: 'Infos commande', conditions: 'Conditions' },
+        footer: '© Gaëlle Christmann et Richard Fournillon — Tous droits réservés',
+        home: {
+          eyebrow: 'Exposition photographique',
+          paragraphs: [
+            'Deux photographes. Deux regards. Une même passion pour la rue et ses habitants.',
+            "Bienvenue dans l'exposition virtuelle CONTRASTES",
+            "Vous entrez dans une exposition née d'une amitié et d'une passion partagée : photographier la rue, telle qu'elle est, brute, vivante, imprévisible. La photographie de rue c'est avant tout la mise en lumière de la beauté des choses banales, de l'harmonie visuelle au milieu du bazar urbain.",
+            "Nous sommes Gaëlle Christmann et Richard Fournillon. Appareils en main, nous arpentons les rues à l'affût de ce moment précis où une scène banale devient signifiante, poétique ou parfois déroutante. De ces instants où un inconnu devient, le temps d'un cliché, le personnage central d'une histoire qui se raconte toute seule. Un spectacle éphémère qui ne se rejoue jamais deux fois.",
+            "Ce que vous verrez ici, c'est ce qui nous a arrêtés, ce qui nous a forcés à appuyer sur le déclencheur. Des noirs profonds et des lumières vives, faisant apparaître des silhouettes monochromes, et qui redessinent des immeubles ou des rues entières. Des couleurs aussi parfois, quand la rue nous en a imposé. Et toujours la même obsession : ce qui se passe quand la lumière rencontre l'ombre, quand le mouvement se fige, quand l'anonyme devient sujet.",
+            "<em>Contrastes</em>, c'est quarante-deux images. Quarante-deux instants volés."
+          ],
+          meta: '<strong>Photographes</strong> — Gaëlle Christmann &amp; Richard Fournillon'
+        },
+        photos: {
+          eyebrow: 'Contrastes',
+          title: 'La collection',
+          subtitle: '42 photographies · Gaëlle Christmann Richard Fournillon',
+          reserve: 'Réserver'
+        },
+        infos: {
+          eyebrow: 'Commander',
+          title: 'Tirages & livraison',
+          subtitle: 'Les informations essentielles avant d’acquérir une photographie de l’exposition.',
+          intro: 'Chaque tirage est préparé à la demande, signé à la main et vérifié avant remise ou expédition. Les réservations sont confirmées par e-mail après réception du formulaire. Chaque photographie est proposée en tirage signé et numéroté, dans la limite de 30 exemplaires tous formats et supports confondus.',
+          cards: [
+            ['Prix', '13×18 cm : 20 € tirage simple<br>13×18 cm avec cadre 23×31,7 cm et passe-partout blanc : 40 €', '21×29,7 cm : 35 € tirage simple<br>21×29,7 cm avec cadre 32×42 cm et passe-partout blanc : 60 €', '29,7×42 cm : 50 € tirage simple<br>29,7×42 cm avec cadre 42×52 cm et passe-partout blanc : 80 €', '50×75 cm disponible sur certaines photographies : 60 € tirage simple<br>50×75 cm avec cadre 70×100 cm et passe-partout blanc : 90 €', 'Les frais d’expédition éventuels sont confirmés par e-mail.'],
+            ['Papier', 'Formats 13×18, 21×29,7 et 29,7×42 : tirage Fine Art Baryta FB 350 g/m². Format 50×75 : tirage sur papier HP Premium 250 g/m².', 'Le rendu privilégie la profondeur des noirs, les contrastes et la tenue des détails.'],
+            ['Disponibilité', 'La disponibilité et les modalités de remise sont confirmées par e-mail après votre demande de réservation.']
+          ],
+          specialTitle: 'Commande spéciale',
+          specialText: 'Pour un autre format, un envoi postal, une commande groupée ou une question sur une œuvre, utilisez la page Contact avant d’envoyer votre demande.'
+        },
+        contact: {
+          title: 'Une question avant commande ?',
+          subtitle: 'Formats, livraison, disponibilité ou demande particulière.',
+          intro: 'Écrivez-nous pour une question sur un tirage, une livraison, une commande spéciale ou une disponibilité.',
+          hostingTitle: "Accueillir l'exposition",
+          hostingTexts: [
+            "Contrastes est une exposition modulable, pensée pour s'adapter à des espaces variés — galeries, médiathèques, cafés culturels, lieux d'entreprise.",
+            "Elle réunit 42 photographies en tirage Fine Art, disponibles en différents formats selon la configuration de votre espace. Nous assurons nous-mêmes l'accrochage et restons disponibles durant toute la durée de l'exposition.",
+            "Si vous souhaitez nous accueillir ou en savoir plus, utilisez le formulaire ci-dessous ou contactez-nous directement par e-mail : gaellestreetphotography@gmail.com."
+          ],
+          formTitle: 'Formulaire de contact',
+          subject: 'Sujet',
+          message: 'Message',
+          submit: 'Envoyer le message',
+          success: 'Merci, votre message a bien été envoyé.',
+          error: "L'envoi n'a pas abouti. Vérifiez votre connexion ou réessayez après le déploiement Netlify."
+        },
+        cart: {
+          eyebrow: 'Réservation',
+          title: 'Votre sélection',
+          subtitle: 'Vérifiez les tirages sélectionnés avant d’envoyer votre demande.',
+          empty: 'Votre panier est vide pour le moment.',
+          summaryTitle: 'Résumé',
+          none: 'Aucun tirage sélectionné.',
+          total: 'Total estimé',
+          send: 'Envoyer ma demande',
+          continue: 'Continuer les achats',
+          clear: 'Vider le panier',
+          noteEmpty: 'Ajoutez un tirage au panier pour envoyer une demande de réservation.',
+          noteSent: 'Votre demande de réservation a été envoyée. Nous vous répondrons par e-mail.',
+          noteReady: 'Envoyez le formulaire prérempli pour réserver les tirages sélectionnés.',
+          selected: count => `${count} tirage${count > 1 ? 's' : ''} sélectionné${count > 1 ? 's' : ''}.`,
+          remove: 'Retirer'
+        },
+        legal: {
+          eyebrow: 'Informations légales',
+          title: 'Conditions de réservation',
+          subtitle: 'Informations applicables aux demandes de réservation de tirages.',
+          intro: 'Exposition photographique CONTRASTES — photographies de Gaëlle Christmann et Richard Fournillon. Site internet : https://contrastes.netlify.app. Contact principal : gaellestreetphotography@gmail.com.',
+          blocks: [
+            ['1. Objet du site', 'Le site présente l’exposition photographique CONTRASTES et permet aux visiteurs de consulter une sélection de photographies disponibles sous forme de tirages Fine Art.', 'Le formulaire de réservation permet d’indiquer un intérêt pour un ou plusieurs tirages. Aucun paiement n’est effectué directement sur le site.'],
+            ['2. Nature de la réservation', 'L’envoi du formulaire constitue une demande de réservation et non une commande ferme.', 'La réservation est confirmée par e-mail, sous réserve de disponibilité du tirage, de validation du format demandé et d’accord sur les modalités de remise, d’expédition et de paiement.', 'Tant que la réservation n’a pas été confirmée par e-mail, aucune vente définitive n’est considérée comme conclue.'],
+            ['3. Tirages proposés', 'Les photographies sont proposées sous forme de tirages signés et numérotés, dans la limite de 30 exemplaires tous formats et supports confondus.', 'Les formats 13×18, 21×29,7 et 29,7×42 sont réalisés en tirage Fine Art Baryta FB 350 g/m². Le format 50×75 est réalisé sur papier HP Premium 250 g/m².', 'Les formats, options d’encadrement et prix affichés sur le site sont présentés à titre d’information et peuvent être confirmés ou ajustés par e-mail avant validation définitive.', 'Les visuels présentés en ligne peuvent légèrement différer du rendu imprimé selon les écrans, les conditions d’affichage et les réglages de luminosité.'],
+            ['4. Prix', 'Les prix sont indiqués en euros.', 'Les prix affichés comprennent le tirage seul ou, lorsque l’option est sélectionnée, le tirage avec encadrement et passe-partout blanc.', 'Les frais éventuels de remise, d’expédition, d’emballage ou d’assurance sont confirmés par e-mail avant validation définitive.'],
+            ['5. Paiement', 'Aucun paiement n’est effectué directement sur le site.', 'Après réception de la demande de réservation, les photographes contactent le demandeur par e-mail afin de confirmer la disponibilité, le montant total et les modalités de paiement.', 'Le paiement peut être organisé hors site selon les modalités convenues entre les parties : PayPal, virement bancaire, paiement en main propre, lien de paiement ou tout autre moyen accepté par les photographes.'],
+            ['6. Remise et expédition', 'La remise en main propre peut être proposée à Paris ou dans un lieu convenu avec le demandeur.', 'Une expédition peut être envisagée selon le tirage, le format, l’encadrement et l’adresse de destination.', 'Les modalités, frais et délais de remise ou d’expédition sont confirmés par e-mail avant validation définitive.'],
+            ['7. Annulation, indisponibilité et modifications', 'Les photographes peuvent refuser ou annuler une demande de réservation si le tirage n’est plus disponible, si le format demandé n’est pas réalisable, ou si les modalités de remise ou de paiement ne peuvent pas être confirmées.', 'Le demandeur peut renoncer à sa demande tant qu’aucune confirmation définitive n’a été donnée par e-mail.'],
+            ['8. Droit de rétractation et retours', 'L’envoi du formulaire constitue une demande de réservation et ne vaut pas commande ferme. La vente n’est considérée comme conclue qu’après confirmation par e-mail des photographes, accord sur le tirage, le format, les modalités de remise et le mode de paiement.', 'En cas de vente conclue à distance, les conditions applicables au droit de rétractation, aux retours ou aux éventuelles exceptions sont précisées avant validation définitive. Les tirages réalisés à la demande, signés, encadrés ou préparés selon des choix spécifiques peuvent faire l’objet de conditions particulières.'],
+            ['9. Données personnelles', 'Les données transmises via les formulaires du site sont utilisées uniquement pour répondre aux demandes de contact, traiter les demandes de réservation et organiser les échanges liés aux tirages.', 'Les données collectées peuvent comprendre : nom, adresse e-mail, téléphone, détails de la sélection, mode de remise souhaité et message libre.', 'Ces données ne sont pas vendues à des tiers. Elles sont conservées uniquement pendant la durée nécessaire au traitement des demandes et au suivi des échanges.', 'Pour toute demande d’accès, de rectification ou de suppression des données personnelles, contacter : gaellestreetphotography@gmail.com.'],
+            ['10. Droits d’auteur', 'Les photographies, textes et visuels présentés sur le site sont protégés par le droit d’auteur.', 'Toute reproduction, diffusion, modification, exploitation commerciale ou utilisation non autorisée des images est interdite sans accord écrit préalable des photographes.', 'L’achat ou la réservation d’un tirage ne transfère aucun droit d’exploitation ou de reproduction sur l’image.']
+          ]
+        },
+        modal: {
+          paperBaryta: 'Tirage Fine Art Baryta FB 350 g/m² · Signé et numéroté',
+          paperHp: 'Tirage sur papier HP Premium 250 g/m² · Signé et numéroté',
+          chooseFormat: 'Choisir un format :',
+          frameOption: "Option d'encadrement :",
+          printOnly: 'Tirage Fine Art seul',
+          framePrefix: 'Encadrement',
+          added: 'a été ajouté au panier.',
+          viewCart: 'Voir le panier',
+          continue: 'Continuer les achats',
+          add: 'Ajouter au panier',
+          note: 'Ajoutez ce tirage au panier, puis envoyez votre demande depuis la page panier.',
+          photoPlaceholder: '[ Photo ]'
+        },
+        order: {
+          title: 'Demande de réservation',
+          intro: 'Le formulaire est prérempli avec votre panier. Nous vous recontactons ensuite par e-mail pour confirmer la disponibilité, la remise principalement en main propre et le mode de paiement hors site.',
+          name: 'Nom',
+          phone: 'Téléphone',
+          delivery: 'Mode de remise',
+          deliveryOptions: ['À définir ensemble', 'Remise en main propre', 'Expédition'],
+          selection: 'Sélection',
+          message: 'Message',
+          submit: 'Envoyer la demande de réservation',
+          noPayment: 'Aucun paiement n’est effectué sur le site.',
+          sending: 'Envoi en cours...',
+          detailsTotal: 'Total'
+        },
+        common: { name: 'Nom', email: 'E-mail', honeypot: 'Ne pas remplir' }
+      },
+      en: {
+        nav: { accueil: 'Home', photos: 'Photos', contact: 'Contact', panier: 'Basket', infos: 'Order info', conditions: 'Terms' },
+        footer: '© Gaëlle Christmann and Richard Fournillon — All rights reserved',
+        home: {
+          eyebrow: 'Photography exhibition',
+          paragraphs: [
+            'Two photographers. Two perspectives. One shared passion for the street and its people.',
+            'Welcome to the virtual exhibition CONTRASTES',
+            'You are entering an exhibition born from friendship and a shared passion: photographing the street as it is, raw, alive, unpredictable. Street photography is first and foremost about revealing the beauty of ordinary things, the visual harmony inside the urban disorder.',
+            'We are Gaëlle Christmann and Richard Fournillon. Cameras in hand, we walk the streets looking for the precise moment when an ordinary scene becomes meaningful, poetic, or sometimes unsettling. Those instants when a stranger becomes, for the time of a photograph, the central character of a story that seems to tell itself. A fleeting scene that never happens twice.',
+            'What you will see here is what stopped us, what compelled us to press the shutter. Deep blacks and bright lights reveal monochrome silhouettes and redraw buildings or entire streets. Sometimes colour too, when the street demanded it. And always the same obsession: what happens when light meets shadow, when movement freezes, when the anonymous becomes the subject.',
+            '<em>Contrastes</em> is forty-two images. Forty-two stolen moments.'
+          ],
+          meta: '<strong>Photographers</strong> — Gaëlle Christmann &amp; Richard Fournillon'
+        },
+        photos: {
+          eyebrow: 'Contrastes',
+          title: 'The collection',
+          subtitle: '42 photographs · Gaëlle Christmann Richard Fournillon',
+          reserve: 'Reserve'
+        },
+        infos: {
+          eyebrow: 'Ordering',
+          title: 'Prints & delivery',
+          subtitle: 'Essential information before acquiring a photograph from the exhibition.',
+          intro: 'Each print is prepared on demand, hand-signed, and checked before handover or shipping. Reservations are confirmed by e-mail after the form has been received. Each photograph is offered as a signed and numbered print, limited to 30 copies across all formats and media combined.',
+          cards: [
+            ['Prices', '13×18 cm: €20 print only<br>13×18 cm with 23×31.7 cm frame and white mat: €40', '21×29.7 cm: €35 print only<br>21×29.7 cm with 32×42 cm frame and white mat: €60', '29.7×42 cm: €50 print only<br>29.7×42 cm with 42×52 cm frame and white mat: €80', '50×75 cm available for selected photographs: €60 print only<br>50×75 cm with 70×100 cm frame and white mat: €90', 'Any shipping costs are confirmed by e-mail.'],
+            ['Paper', '13×18, 21×29.7 and 29.7×42 formats: Fine Art Baryta FB 350 g/m² print. 50×75 format: HP Premium 250 g/m² paper.', 'The rendering favours deep blacks, strong contrasts, and fine detail.'],
+            ['Availability', 'Availability and handover/shipping details are confirmed by e-mail after your reservation request.']
+          ],
+          specialTitle: 'Special request',
+          specialText: 'For another format, postal shipping, a group order, or a question about a work, use the Contact page before sending your request.'
+        },
+        contact: {
+          title: 'A question before ordering?',
+          subtitle: 'Formats, delivery, availability, or a specific request.',
+          intro: 'Write to us about a print, delivery, a special request, or availability.',
+          hostingTitle: 'Host the exhibition',
+          hostingTexts: [
+            'Contrastes is a modular exhibition designed to adapt to a wide range of spaces — galleries, media libraries, cultural cafés, and company venues.',
+            'It brings together 42 Fine Art photographic prints, available in different formats depending on your space. We handle the installation ourselves and remain available throughout the exhibition period.',
+            'If you would like to host us or learn more, use the form below or contact us directly by e-mail: gaellestreetphotography@gmail.com.'
+          ],
+          formTitle: 'Contact form',
+          subject: 'Subject',
+          message: 'Message',
+          submit: 'Send message',
+          success: 'Thank you, your message has been sent.',
+          error: 'The message could not be sent. Check your connection or try again after the Netlify deployment.'
+        },
+        cart: {
+          eyebrow: 'Reservation',
+          title: 'Your selection',
+          subtitle: 'Review the selected prints before sending your request.',
+          empty: 'Your basket is empty for now.',
+          summaryTitle: 'Summary',
+          none: 'No print selected.',
+          total: 'Estimated total',
+          send: 'Send my request',
+          continue: 'Continue browsing',
+          clear: 'Empty basket',
+          noteEmpty: 'Add a print to the basket to send a reservation request.',
+          noteSent: 'Your reservation request has been sent. We will reply by e-mail.',
+          noteReady: 'Send the pre-filled form to reserve the selected prints.',
+          selected: count => `${count} print${count > 1 ? 's' : ''} selected.`,
+          remove: 'Remove'
+        },
+        legal: {
+          eyebrow: 'Legal information',
+          title: 'Reservation terms',
+          subtitle: 'Information applicable to print reservation requests.',
+          intro: 'CONTRASTES photography exhibition — photographs by Gaëlle Christmann and Richard Fournillon. Website: https://contrastes.netlify.app. Main contact: gaellestreetphotography@gmail.com.',
+          blocks: [
+            ['1. Purpose of the website', 'The website presents the CONTRASTES photography exhibition and allows visitors to view a selection of photographs available as Fine Art prints.', 'The reservation form allows visitors to express interest in one or more prints. No payment is made directly on the website.'],
+            ['2. Nature of the reservation', 'Submitting the form constitutes a reservation request and not a firm order.', 'The reservation is confirmed by e-mail, subject to print availability, validation of the requested format, and agreement on handover, shipping, and payment arrangements.', 'Until the reservation has been confirmed by e-mail, no final sale is considered concluded.'],
+            ['3. Prints offered', 'The photographs are offered as signed and numbered prints, limited to 30 copies across all formats and media combined.', 'The 13×18, 21×29.7 and 29.7×42 formats are produced as Fine Art Baryta FB 350 g/m² prints. The 50×75 format is produced on HP Premium 250 g/m² paper.', 'Formats, framing options, and prices shown on the website are provided for information and may be confirmed or adjusted by e-mail before final validation.', 'Images displayed online may differ slightly from the printed result depending on screens, display conditions, and brightness settings.'],
+            ['4. Prices', 'Prices are stated in euros.', 'Displayed prices include either the print alone or, when selected, the print with frame and white mat.', 'Any handover, shipping, packaging, or insurance costs are confirmed by e-mail before final validation.'],
+            ['5. Payment', 'No payment is made directly on the website.', 'After receiving the reservation request, the photographers contact the requester by e-mail to confirm availability, the total amount, and payment arrangements.', 'Payment may be arranged off-site by agreement between the parties: PayPal, bank transfer, in-person payment, payment link, or any other method accepted by the photographers.'],
+            ['6. Handover and shipping', 'In-person handover may be offered in Paris or at a place agreed with the requester.', 'Shipping may be considered depending on the print, format, framing, and destination address.', 'Handover or shipping arrangements, costs, and timelines are confirmed by e-mail before final validation.'],
+            ['7. Cancellation, unavailability, and changes', 'The photographers may refuse or cancel a reservation request if the print is no longer available, if the requested format cannot be produced, or if handover or payment arrangements cannot be confirmed.', 'The requester may withdraw the request until final confirmation has been given by e-mail.'],
+            ['8. Withdrawal right and returns', 'Submitting the form constitutes a reservation request and does not amount to a firm order. The sale is considered concluded only after e-mail confirmation by the photographers and agreement on the print, format, handover arrangements, and payment method.', 'If the sale is concluded remotely, the applicable withdrawal, return, or exception conditions are specified before final validation. Prints produced on demand, signed, framed, or prepared according to specific choices may be subject to particular conditions.'],
+            ['9. Personal data', 'Data submitted through the website forms is used only to answer contact requests, process reservation requests, and manage exchanges related to prints.', 'Collected data may include: name, e-mail address, phone number, selection details, preferred handover method, and free-form message.', 'This data is not sold to third parties. It is kept only for the time needed to process requests and follow-up exchanges.', 'For any request to access, rectify, or delete personal data, contact: gaellestreetphotography@gmail.com.'],
+            ['10. Copyright', 'The photographs, texts, and visuals presented on the website are protected by copyright.', 'Any reproduction, distribution, modification, commercial exploitation, or unauthorized use of the images is prohibited without prior written agreement from the photographers.', 'Purchasing or reserving a print does not transfer any exploitation or reproduction rights over the image.']
+          ]
+        },
+        modal: {
+          paperBaryta: 'Fine Art Baryta FB 350 g/m² print · Signed and numbered',
+          paperHp: 'HP Premium 250 g/m² paper print · Signed and numbered',
+          chooseFormat: 'Choose a format:',
+          frameOption: 'Framing option:',
+          printOnly: 'Fine Art print only',
+          framePrefix: 'Framing',
+          added: 'has been added to the basket.',
+          viewCart: 'View basket',
+          continue: 'Continue browsing',
+          add: 'Add to basket',
+          note: 'Add this print to the basket, then send your request from the basket page.',
+          photoPlaceholder: '[ Photo ]'
+        },
+        order: {
+          title: 'Reservation request',
+          intro: 'The form is pre-filled with your basket. We will contact you by e-mail to confirm availability, mainly in-person handover, and off-site payment arrangements.',
+          name: 'Name',
+          phone: 'Phone',
+          delivery: 'Handover method',
+          deliveryOptions: ['To be agreed together', 'In-person handover', 'Shipping'],
+          selection: 'Selection',
+          message: 'Message',
+          submit: 'Send reservation request',
+          noPayment: 'No payment is made on the website.',
+          sending: 'Sending...',
+          detailsTotal: 'Total'
+        },
+        common: { name: 'Name', email: 'E-mail', honeypot: 'Do not fill in' }
+      }
+    };
+
+    let currentLang = localStorage.getItem('contrastesLang') || 'fr';
+    if (!translations[currentLang]) currentLang = 'fr';
+
+    function tr(section) {
+      return section.split('.').reduce((obj, key) => obj && obj[key], translations[currentLang]);
+    }
+
+    function setText(selector, value) {
+      const node = document.querySelector(selector);
+      if (node) node.textContent = value;
+    }
+
+    function setHTML(selector, value) {
+      const node = document.querySelector(selector);
+      if (node) node.innerHTML = value;
+    }
+
+    function setAllText(selector, value) {
+      document.querySelectorAll(selector).forEach(node => { node.textContent = value; });
+    }
+
+    function changerLangue(lang) {
+      currentLang = translations[lang] ? lang : 'fr';
+      localStorage.setItem('contrastesLang', currentLang);
+      appliquerLangue();
+    }
+
+    function appliquerLangue() {
+      const t = translations[currentLang];
+      document.documentElement.lang = currentLang;
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('actif', btn.dataset.lang === currentLang));
+      document.querySelector('.lang-switch')?.setAttribute('aria-label', currentLang === 'fr' ? 'Choix de la langue' : 'Language selection');
+
+      setText('#nav-accueil', t.nav.accueil);
+      setText('#nav-photos', t.nav.photos);
+      setText('#nav-contact', t.nav.contact);
+      document.querySelector('#nav-panier').firstChild.textContent = `${t.nav.panier} `;
+      setAllText("footer .footer-link[onclick=\"showPage('photos')\"]", t.nav.photos);
+      setAllText("footer .footer-link[onclick=\"showPage('infos')\"]", t.nav.infos);
+      setAllText("footer .footer-link[onclick=\"showPage('contact')\"]", t.nav.contact);
+      setAllText("footer .footer-link[onclick=\"showPage('cgv')\"]", t.nav.conditions);
+      document.querySelectorAll('footer').forEach(footer => {
+        const links = footer.querySelector('.footer-links');
+        if (links) footer.firstChild.textContent = `${t.footer}\n      `;
+      });
+
+      setText('#page-accueil .accueil-eyebrow', t.home.eyebrow);
+      document.querySelectorAll('#page-accueil .accueil-texte p').forEach((p, i) => { if (t.home.paragraphs[i]) p.innerHTML = t.home.paragraphs[i]; });
+      setHTML('#page-accueil .accueil-meta div', t.home.meta);
+
+      setText('#page-photos .page-eyebrow', t.photos.eyebrow);
+      setText('#page-photos .page-titre', t.photos.title);
+      setText('#page-photos .page-sous-titre', t.photos.subtitle);
+      document.querySelectorAll('.galerie-item').forEach((item, i) => item.setAttribute('aria-label', `${t.photos.reserve} ${photos[i]?.titre || ''}`));
+
+      setText('#page-infos .page-eyebrow', t.infos.eyebrow);
+      setText('#page-infos .page-titre', t.infos.title);
+      setText('#page-infos .page-sous-titre', t.infos.subtitle);
+      setText('#page-infos .intro-panel', t.infos.intro);
+      document.querySelectorAll('#page-infos .info-card').forEach((card, i) => {
+        const content = t.infos.cards[i];
+        if (!content) return;
+        card.querySelector('h3').textContent = content[0];
+        card.querySelectorAll('p').forEach(p => p.remove());
+        content.slice(1).forEach(html => {
+          const p = document.createElement('p');
+          p.innerHTML = html;
+          card.appendChild(p);
+        });
+      });
+      setText('#page-infos .legal-block h3', t.infos.specialTitle);
+      setText('#page-infos .legal-block p', t.infos.specialText);
+
+      setText('#page-contact .page-eyebrow', 'Contact');
+      setText('#page-contact .page-titre', t.contact.title);
+      setText('#page-contact .page-sous-titre', t.contact.subtitle);
+      setText('#page-contact .intro-panel', t.contact.intro);
+      setText('.contact-hosting h3', t.contact.hostingTitle);
+      document.querySelectorAll('.contact-hosting p').forEach((p, i) => { if (t.contact.hostingTexts[i]) p.textContent = t.contact.hostingTexts[i]; });
+      setText('.contact-form-title', t.contact.formTitle);
+      setText('label[for="contact-nom"]', t.common.name);
+      setText('label[for="contact-email"]', t.common.email);
+      setText('label[for="contact-sujet"]', t.contact.subject);
+      setText('label[for="contact-message"]', t.contact.message);
+      setText('#contact-form button[type="submit"]', t.contact.submit);
+
+      setText('#page-panier .page-eyebrow', t.cart.eyebrow);
+      setText('#page-panier .page-titre', t.cart.title);
+      setText('#page-panier .page-sous-titre', t.cart.subtitle);
+      setText('#panier-vide', t.cart.empty);
+      setText('.panier-total h3', t.cart.summaryTitle);
+      setText('.panier-montant span', t.cart.total);
+      setText('#panier-form', t.cart.send);
+      document.querySelectorAll('#page-panier .panier-actions .btn-secondaire')[0].textContent = t.cart.continue;
+      document.querySelectorAll('#page-panier .panier-actions .btn-secondaire')[1].textContent = t.cart.clear;
+
+      setText('#page-cgv .page-eyebrow', t.legal.eyebrow);
+      setText('#page-cgv .page-titre', t.legal.title);
+      setText('#page-cgv .page-sous-titre', t.legal.subtitle);
+      setText('#page-cgv .intro-panel', t.legal.intro);
+      document.querySelectorAll('#page-cgv .legal-block').forEach((block, i) => {
+        const content = t.legal.blocks[i];
+        if (!content) return;
+        block.querySelector('h3').textContent = content[0];
+        block.querySelectorAll('p').forEach(p => p.remove());
+        content.slice(1).forEach(text => {
+          const p = document.createElement('p');
+          p.textContent = text;
+          block.appendChild(p);
+        });
+      });
+
+      setText('#modal-papier', formatActuelLabel === '50×75 cm' ? t.modal.paperHp : t.modal.paperBaryta);
+      document.querySelectorAll('#modal .label-format')[0].textContent = t.modal.chooseFormat;
+      document.querySelectorAll('#modal .label-format')[1].textContent = t.modal.frameOption;
+      document.querySelector('.encadrement-option[data-type="seul"] span').textContent = t.modal.printOnly;
+      setText('#panier-feedback-texte', currentLang === 'fr' ? 'Le tirage a été ajouté au panier.' : 'The print has been added to the basket.');
+      document.querySelectorAll('#panier-feedback .btn-panier')[0].textContent = t.modal.viewCart;
+      document.querySelectorAll('#panier-feedback .btn-panier')[1].textContent = t.modal.continue;
+      setText('#ajout-panier-actions .btn-panier', t.modal.add);
+      setText('#modal-note', t.modal.note);
+      mettreAJourOptionsAchat();
+
+      setText('#form-modal-title', t.order.title);
+      setText('.form-modal-header p', t.order.intro);
+      setText('label[for="commande-nom"]', t.order.name);
+      setText('label[for="commande-email"]', t.common.email);
+      setText('label[for="commande-telephone"]', t.order.phone);
+      setText('label[for="commande-remise"]', t.order.delivery);
+      document.querySelectorAll('#commande-remise option').forEach((option, i) => {
+        option.textContent = t.order.deliveryOptions[i];
+        option.value = t.order.deliveryOptions[i];
+      });
+      setText('label[for="commande-details"]', t.order.selection);
+      setText('label[for="commande-message"]', t.order.message);
+      setText('#commande-form button[type="submit"]', t.order.submit);
+      setText('#commande-form .modal-note', t.order.noPayment);
+      document.querySelectorAll('.contact-honeypot label').forEach(label => {
+        if (label.firstChild) label.firstChild.textContent = `${t.common.honeypot} `;
+      });
+      afficherPanier();
+    }
+
     // ─────────────────────────────────────────
     // PHOTOS
     // 🔧 Pour chaque photo, remplace src: "" par le chemin du fichier
@@ -1462,7 +1871,7 @@
       item.className = 'galerie-item';
       item.tabIndex = 0;
       item.setAttribute('role', 'button');
-      item.setAttribute('aria-label', `Acheter ${p.titre}`);
+      item.setAttribute('aria-label', `${tr('photos.reserve')} ${p.titre}`);
       item.innerHTML = `
         <div class="img-wrap" data-titre="${p.titre}">
           <img src="${p.src}" alt="${p.titre}" loading="lazy" onerror="this.style.display='none'" />
@@ -1508,7 +1917,7 @@
     let prixActuel = 20;
     let titreActuel = '';
     let formatActuelLabel = '13×18 cm';
-    let encadrementActuelLabel = 'Tirage Fine Art seul';
+    let encadrementActuelLabel = translations[currentLang].modal.printOnly;
     let lieuActuel = '';
     let srcActuel = '';
     let srcAfficheActuel = '';
@@ -1523,7 +1932,7 @@
       srcAfficheActuel = src;
       prixActuel = 20;
       formatActuelLabel = '13×18 cm';
-      encadrementActuelLabel = 'Tirage Fine Art seul';
+      encadrementActuelLabel = translations[currentLang].modal.printOnly;
       document.getElementById('modal-titre').textContent = titre;
       document.getElementById('modal-lieu').textContent = lieu;
       document.getElementById('panier-feedback').classList.remove('visible');
@@ -1550,7 +1959,7 @@
       if (src) {
         zone.innerHTML = `<img class="modal-img" src="${src}" alt="${titreActuel}" onerror="this.style.display='none'" />`;
       } else {
-        zone.innerHTML = `<div class="modal-img-placeholder">[ Photo ]</div>`;
+        zone.innerHTML = `<div class="modal-img-placeholder">${translations[currentLang].modal.photoPlaceholder}</div>`;
       }
     }
 
@@ -1574,9 +1983,9 @@
       }
       if (e) e.preventDefault();
       dernierFocus = document.activeElement;
-      const details = panier.map(item => `${item.titre} — ${item.format} — ${item.encadrement || 'Tirage Fine Art seul'} — ${item.prix} €`).join('\n');
+      const details = panier.map(item => `${item.titre} — ${item.format} — ${item.encadrement || translations[currentLang].modal.printOnly} — ${item.prix} €`).join('\n');
       const total = panierTotal();
-      document.getElementById('commande-details').value = `${details}\n\nTotal : ${total} €`;
+      document.getElementById('commande-details').value = `${details}\n\n${translations[currentLang].order.detailsTotal} : ${total} €`;
       document.getElementById('commande-total-input').value = `${total} €`;
       document.getElementById('commande-feedback').classList.remove('visible');
       document.getElementById('commande-feedback').textContent = '';
@@ -1602,7 +2011,7 @@
     }
 
     function signaturePanier() {
-      return panier.map(item => `${item.titre}|${item.format}|${item.encadrement || 'Tirage Fine Art seul'}|${item.prix}`).join('||');
+      return panier.map(item => `${item.titre}|${item.format}|${item.encadrement || translations.fr.modal.printOnly}|${item.prix}`).join('||');
     }
 
     function reservationEnvoyee() {
@@ -1631,14 +2040,17 @@
       formatActuelLabel = formatActif.dataset.format;
       document.getElementById('prix-seul').textContent = prixSeul + ' €';
       document.getElementById('prix-cadre').textContent = prixCadre + ' €';
-      document.getElementById('label-cadre').textContent = `Encadrement ${formatActif.dataset.cadre.replace(/^cadre /, '')}`;
+      const cadreLabel = currentLang === 'en'
+        ? formatActif.dataset.cadreEn
+        : formatActif.dataset.cadre.replace(/^cadre /, '');
+      document.getElementById('label-cadre').textContent = `${translations[currentLang].modal.framePrefix} ${cadreLabel}`;
       document.getElementById('modal-papier').textContent = formatActuelLabel === '50×75 cm'
-        ? 'Tirage sur papier HP Premium 250 g/m² · Signé et numéroté'
-        : 'Tirage Fine Art Baryta FB 350 g/m² · Signé et numéroté';
+        ? translations[currentLang].modal.paperHp
+        : translations[currentLang].modal.paperBaryta;
       prixActuel = avecCadre ? prixCadre : prixSeul;
       encadrementActuelLabel = avecCadre
-        ? `Encadrement ${formatActif.dataset.cadre.replace(/^cadre /, '')}`
-        : 'Tirage Fine Art seul';
+        ? `${translations[currentLang].modal.framePrefix} ${cadreLabel}`
+        : translations[currentLang].modal.printOnly;
       srcAfficheActuel = avecCadre ? srcEncadree(srcActuel) : srcActuel;
       afficherImageModal(srcAfficheActuel);
     }
@@ -1658,7 +2070,7 @@
       const titreFeedback = document.createElement('em');
       titreFeedback.textContent = titreActuel;
       feedback.textContent = '';
-      feedback.append(titreFeedback, ` (format ${formatActuelLabel}, ${encadrementActuelLabel.toLowerCase()}) a été ajouté au panier.`);
+      feedback.append(titreFeedback, ` (format ${formatActuelLabel}, ${encadrementActuelLabel.toLowerCase()}) ${translations[currentLang].modal.added}`);
       document.getElementById('panier-feedback').classList.add('visible');
       document.getElementById('ajout-panier-actions').classList.add('masquee');
     }
@@ -1697,28 +2109,28 @@
           </div>
           <div class="panier-details">
             <h3>${item.titre}</h3>
-            <p>${item.lieu}<br>${item.format}<br>${item.encadrement || 'Tirage Fine Art seul'}</p>
+            <p>${item.lieu}<br>${item.format}<br>${item.encadrement || translations[currentLang].modal.printOnly}</p>
           </div>
           <div class="panier-prix">
             ${item.prix} €
-            <button class="btn-supprimer" type="button" onclick="supprimerDuPanier('${item.id}')">Retirer</button>
+            <button class="btn-supprimer" type="button" onclick="supprimerDuPanier('${item.id}')">${translations[currentLang].cart.remove}</button>
           </div>
         </div>
       `).join('');
       document.getElementById('panier-total').textContent = total + ' €';
       document.getElementById('panier-resume').textContent = panier.length
-        ? `${panier.length} tirage${panier.length > 1 ? 's' : ''} sélectionné${panier.length > 1 ? 's' : ''}.`
-        : 'Aucun tirage sélectionné.';
+        ? translations[currentLang].cart.selected(panier.length)
+        : translations[currentLang].cart.none;
 
       const form = document.getElementById('panier-form');
       const formDisabled = !panier.length || reservationConfirmed;
       form.classList.toggle('action-disabled', formDisabled);
       form.setAttribute('aria-disabled', formDisabled ? 'true' : 'false');
       document.getElementById('panier-note').textContent = !panier.length
-        ? 'Ajoutez un tirage au panier pour envoyer une demande de réservation.'
+        ? translations[currentLang].cart.noteEmpty
         : reservationConfirmed
-          ? 'Votre demande de réservation a été envoyée. Nous vous répondrons par e-mail.'
-          : 'Envoyez le formulaire prérempli pour réserver les tirages sélectionnés.';
+          ? translations[currentLang].cart.noteSent
+          : translations[currentLang].cart.noteReady;
     }
 
     document.getElementById('commande-form').addEventListener('submit', async e => {
@@ -1729,18 +2141,18 @@
       feedback.classList.remove('visible');
       feedback.textContent = '';
       submit.disabled = true;
-      submit.textContent = 'Envoi en cours...';
+      submit.textContent = translations[currentLang].order.sending;
       try {
         await envoyerNetlifyForm(form);
         sessionStorage.setItem('commandeFormulaireSignature', signaturePanier());
         fermerFormulaireCommande();
         afficherPanier();
       } catch (error) {
-        feedback.textContent = "L'envoi n'a pas abouti. Vérifiez votre connexion ou réessayez après le déploiement Netlify.";
+        feedback.textContent = translations[currentLang].contact.error;
         feedback.classList.add('visible');
       } finally {
         submit.disabled = false;
-        submit.textContent = 'Envoyer la demande de réservation';
+        submit.textContent = translations[currentLang].order.submit;
       }
     });
 
@@ -1752,18 +2164,18 @@
       feedback.classList.remove('visible');
       feedback.textContent = '';
       submit.disabled = true;
-      submit.textContent = 'Envoi en cours...';
+      submit.textContent = translations[currentLang].order.sending;
       try {
         await envoyerNetlifyForm(form);
         form.reset();
-        feedback.textContent = 'Merci, votre message a bien été envoyé.';
+        feedback.textContent = translations[currentLang].contact.success;
         feedback.classList.add('visible');
       } catch (error) {
-        feedback.textContent = "L'envoi n'a pas abouti. Vérifiez votre connexion ou réessayez après le déploiement Netlify.";
+        feedback.textContent = translations[currentLang].contact.error;
         feedback.classList.add('visible');
       } finally {
         submit.disabled = false;
-        submit.textContent = 'Envoyer le message';
+        submit.textContent = translations[currentLang].contact.submit;
       }
     });
 
@@ -1785,7 +2197,7 @@ document.addEventListener('click', e => {
   if (action) e.preventDefault();
 });
 
-afficherPanier();
+appliquerLangue();
 
   </script>
 </body>
