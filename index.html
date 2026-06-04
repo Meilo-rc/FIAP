@@ -145,7 +145,6 @@
       margin: 60px auto 0;
       padding: 0 40px;
     }
-    /* 🔧 PHOTO PRINCIPALE — remplace src="" par le chemin de ta photo */
     .hero-img-wrap {
       width: 100%;
       aspect-ratio: 16/9;
@@ -995,7 +994,6 @@
 
     <div class="hero">
       <div class="hero-img-wrap">
-        <!-- 🔧 Remplace src="" par le chemin de ta photo principale, ex: src="photos/banniere.png" -->
         <img src="photos/affiche.png" alt="Contrastes" onerror="this.style.display='none'" />
       </div>
     </div>
@@ -1028,13 +1026,12 @@
       <div class="accueil-separateur"></div>
 
       <div class="accueil-meta">
-        <!-- 🔧 Complète avec vos noms et infos -->
         <div><strong>Photographes</strong> — Gaëlle Christmann &amp; Richard Fournillon</div>
       </div>
     </div>
 
     <footer>
-      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — 2.02
+      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — 2.03
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('photos')">Photos</button>
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
@@ -1057,7 +1054,7 @@
     <div class="galerie" id="galerie"></div>
 
     <footer>
-      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — 2.02
+      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — 2.03
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('photos')">Photos</button>
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
@@ -1110,7 +1107,7 @@
     </div>
 
     <footer>
-      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — 2.02
+      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — 2.03
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('photos')">Photos</button>
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
@@ -1169,7 +1166,7 @@
     </div>
 
     <footer>
-      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — 2.02
+      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — 2.03
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('photos')">Photos</button>
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
@@ -1211,7 +1208,7 @@
     </div>
 
     <footer>
-      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — 2.02
+      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — 2.03
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('photos')">Photos</button>
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
@@ -1297,7 +1294,7 @@
     </div>
 
     <footer>
-      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — 2.02
+      © Gaëlle Christmann et Richard Fournillon — Tous droits réservés — 2.03
       <div class="footer-links">
         <button class="footer-link" type="button" onclick="showPage('photos')">Photos</button>
         <button class="footer-link" type="button" onclick="showPage('infos')">Infos commande</button>
@@ -1418,7 +1415,7 @@
     const translations = {
       fr: {
         nav: { accueil: 'Accueil', photos: 'Photos', contact: 'Contact', panier: 'Panier', infos: 'Infos commande', conditions: 'Conditions' },
-        footer: '© Gaëlle Christmann et Richard Fournillon — Tous droits réservés — 2.02',
+        footer: '© Gaëlle Christmann et Richard Fournillon — Tous droits réservés — 2.03',
         home: {
           eyebrow: 'Exposition photographique',
           paragraphs: [
@@ -1534,7 +1531,7 @@
       },
       en: {
         nav: { accueil: 'Home', photos: 'Photos', contact: 'Contact', panier: 'Basket', infos: 'Order info', conditions: 'Terms' },
-        footer: '© Gaëlle Christmann and Richard Fournillon — All rights reserved — 2.02',
+        footer: '© Gaëlle Christmann and Richard Fournillon — All rights reserved — 2.03',
         home: {
           eyebrow: 'Photography exhibition',
           paragraphs: [
@@ -1795,10 +1792,6 @@
 
     // ─────────────────────────────────────────
     // PHOTOS
-    // 🔧 Pour chaque photo, remplace src: "" par le chemin du fichier
-    //    ex: src: "photos/expo1.png"
-    //    et type: "couleur" ou "nb"
-    // ─────────────────────────────────────────
     const photos = [
       { titre: "Toutes voiles dedans",         lieu: "Gare Saint-Lazare, Paris",          src: "photos/expo1.png", type: "nb" },
       { titre: "Rouge",                         lieu: "La Gaîté Lyrique, Paris",           src: "photos/expo2.png", type: "couleur" },
